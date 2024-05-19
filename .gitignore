@@ -1,3 +1,7 @@
+# App specific
+static/
+.idea
+
 # Logs
 logs
 *.log

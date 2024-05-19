@@ -1,0 +1,37 @@
+{
+  "name": "pixelaw-server",
+  "description": "NodeExpress backend for \"bots\" and other optimizations",
+  "version": "0.3.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "dev": "tsx src/index.ts",
+    "server": "ts-node src/server.ts",
+    "selector": "tsx utils/selector.ts",
+    "build": "tsc -p ."
+  },
+  "dependencies": {
+    "@apollo/client": "^3.8.4",
+    "@aws-sdk/client-s3": "^3.418.0",
+    "abi-wan-kanabi": "^2.2.2",
+    "canvas": "^2.11.2",
+    "dotenv": "^16.3.1",
+    "express": "^4.19.2",
+    "fs": "^0.0.1-security",
+    "graphql": "^16.8.1",
+    "graphql-tag": "^2.12.6",
+    "graphql-transport-ws": "^1.9.0",
+    "graphql-ws": "^5.14.2",
+    "pngjs": "^7.0.0",
+    "starknet": "^5.24.3",
+    "ws": "^8.15.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.7.0",
+    "nodemon": "^3.0.1",
+    "ts-node": "^10.9.1",
+    "tsx": "^4.10.5",
+    "typescript": "^5.4.5",
+    "wait-port": "^1.0.4"
+  }
+}
