@@ -10,9 +10,9 @@ const execute = async (account: Account, calls: AllowArray<Call>) => {
 
 
     // TODO this fails?
-    const {suggestedMaxFee: estimatedFee1} = await account.estimateInvokeFee(
-      calls
-    );
+    // const {suggestedMaxFee: estimatedFee1} = await account.estimateInvokeFee(
+    //   calls
+    // );
 
     const {transaction_hash} = await account?.execute(
       calls,

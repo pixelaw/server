@@ -1,10 +1,39 @@
-import PixelBoardBot from './PixelBoardBot'
-import QueueBot from './QueueBot'
+import express from 'express';
+import path from 'path';
+import {fork} from 'child_process';
+import {Message} from "./QueueHandler";
 
-function startBots() {
-  // PixelBoardBot().then()
-  QueueBot().then()
-}
+import dotenv from 'dotenv';
 
-// Start the initial request
-startBots();
+dotenv.config();
+
+const options = {
+    execArgv: [
+        '-r', 'ts-node/register',
+        // '--inspect-brk=9230'
+    ]
+};
+const queueHandler = fork('./src/QueueHandler/index.ts', [], options);
+
+
+const app = express();
+const port: number = 3001;
+
+// Serve static files from the /static directory
+app.use('/', express.static(path.join(__dirname, 'static')));
+
+
+app.listen(port, () => {
+    console.log(`Webserver listening on port ${port}`);
+});
+
+// Start QueueHandler
+queueHandler.on('message', (message: Message) => {
+    console.log('Message from child', message);
+});
+
+queueHandler.on('error', (error) => {
+    console.error('Error from child', error);
+});
+
+queueHandler.send({cmd: 'start'});

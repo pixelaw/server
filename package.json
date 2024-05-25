@@ -6,6 +6,7 @@
   "license": "MIT",
   "scripts": {
     "old": "ts-node src/old.ts",
+    "server": "ts-node src/index.ts",
     "queuehandler": "ts-node src/QueueHandler/index.ts",
     "selector": "tsx utils/selector.ts",
     "postinstall": "patch-package"
