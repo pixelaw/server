@@ -29,11 +29,11 @@ app.listen(port, () => {
 
 // Start QueueHandler
 queueHandler.on('message', (message: Message) => {
-    console.log('Message from child', message);
+    console.log('QueueHandler: ', message.data);
 });
 
 queueHandler.on('error', (error) => {
-    console.error('Error from child', error);
+    console.error('QueueHandler Error: ', error);
 });
 
 queueHandler.send({cmd: 'start'});
