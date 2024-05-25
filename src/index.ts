@@ -17,7 +17,7 @@ const queueHandler = fork('./src/QueueHandler/index.ts', [], options);
 
 
 const app = express();
-const port: number = 3001;
+const port: number = parseInt(process.env["SERVER_PORT"]) ?? 3000;
 
 // Serve static files from the /static directory
 app.use('/', express.static(path.join(__dirname, 'static')));

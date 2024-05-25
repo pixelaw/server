@@ -36,9 +36,6 @@ COPY --from=builder /app /app
 # Bundle app source
 COPY . .
 
-# Your app binds to port 8080 so you'll use the EXPOSE instruction to have it mapped by the docker daemon
-EXPOSE 8080
-
 ENV ACCOUNT_ADDRESS=0x0
 ENV ACCOUNT_PK=0x0
 ENV STORAGE_DIR="/app/storage"
