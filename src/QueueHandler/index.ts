@@ -1,12 +1,10 @@
 import {
     Account,
-    BlockWithTxHashes,
     CallData,
     Contract,
     num,
     RpcProvider,
-    events, BigNumberish, Call
-} from 'starknet';
+    events, BigNumberish} from 'starknet';
 import {SqliteDb} from "../db";
 import {getAddresses} from "./getAddresses";
 import { sleep } from '../utils/sleep';
@@ -87,26 +85,26 @@ class QueueHandler {
             // TODO Handle page/continuation from the eventsList
             const parsedEvents = events.parseEvents(
                 eventsList.events,
-                this.coreContract.events,
-                this.coreContract.structs,
+                this.coreContract["events"],
+                this.coreContract["structs"],
                 CallData.getAbiEnum(this.coreContract.abi)
             )
 
             for(let event of parsedEvents){
                 if (event.hasOwnProperty("QueueScheduled")) {
+
                     await db.setQueueItemPending({
                         id: num.toHex(<BigNumberish>event.QueueScheduled.id),
                         timestamp: Number(event.QueueScheduled.timestamp),
                         called_system: num.toHex(<BigNumberish>event.QueueScheduled.called_system),
                         selector: num.toHex(<BigNumberish>event.QueueScheduled.selector),
+                        // @ts-ignore because we're sure that calldata is always an array.
                         calldata: event.QueueScheduled.calldata.map(e => num.toHex(e))
                     })
                 } else if (event.hasOwnProperty("QueueProcessed")) {
                     await db.removeQueueItemPending(num.toHex(<BigNumberish>event.QueueProcessed.id))
                 }
             }
-
-
 
             const pendingFromDb = await db.getQueueItemPending(now)
 
