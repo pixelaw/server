@@ -219,6 +219,7 @@ function log(message: string) {
     }
 }
 
+
 process.on('message', async (message: Message) => {
     if (message.cmd === 'start') {
         running = true;
