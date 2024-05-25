@@ -17,7 +17,8 @@ RUN \
 # Set the working directory
 WORKDIR /app
 
-# Copy package.json and package-lock.json
+
+COPY patches ./patches
 COPY package.json yarn.lock ./
 
 # Install dependencies
