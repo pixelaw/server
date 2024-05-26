@@ -1,5 +1,5 @@
 # App specific
-static/
+web/
 .idea
 storage/
 # Logs

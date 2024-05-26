@@ -1,5 +1,4 @@
 import express from 'express';
-import path from 'path';
 import {fork} from 'child_process';
 import {Message} from "./QueueHandler";
 
@@ -13,15 +12,15 @@ const options = {
         // '--inspect-brk=9230'
     ]
 };
+
 const queueHandler = fork('./src/QueueHandler/index.ts', [], options);
 
 
 const app = express();
 const port: number = parseInt(process.env["SERVER_PORT"]) ?? 3000;
 
-// Serve static files from the /static directory
-app.use('/', express.static(path.join(__dirname, 'static')));
 
+app.use('/', express.static(process.env["WEB_DIR"]));
 
 app.listen(port, () => {
     console.log(`Webserver listening on port ${port}`);

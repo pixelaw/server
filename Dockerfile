@@ -39,6 +39,7 @@ COPY . .
 ENV ACCOUNT_ADDRESS=0x0
 ENV ACCOUNT_PK=0x0
 ENV STORAGE_DIR="/app/storage"
+ENV WEB_DIR="/app/web"
 
 # Define the command to run your app using CMD which defines your runtime
 CMD [ "ts-node", "src/index.ts" ]
