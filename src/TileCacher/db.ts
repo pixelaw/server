@@ -4,17 +4,16 @@ import fs from 'fs';
 import path from 'path';
 
 import {open} from 'sqlite'
-import {QueueItem} from "./QueueHandler";
 
 
 export class SqliteDb {
     private db: Database;
 
-    constructor(private dbDir: string) {
+    constructor(private dbFile: string) {
     }
 
     async open(): Promise<void> {
-        const filename= `${this.dbDir}/server.sqlite`
+        const filename= `${this.dbFile}`
 
         if (!fs.existsSync(filename)) {
             this.db = await open({

@@ -5,8 +5,8 @@ import {
     num,
     RpcProvider,
     events, BigNumberish} from 'starknet';
-import {SqliteDb} from "../db";
-import {getAddresses} from "./getAddresses";
+import {SqliteDb} from "./db";
+import {getAddresses} from "../utils/getAddresses";
 import { sleep } from '../utils/sleep';
 
 // Approx Blocktime so we can minimize submitting items early
@@ -33,37 +33,37 @@ let running = true
 class QueueHandler {
     nodeUrl: string
     toriiUrl: string
-    dbName: string
+    storageDir: string
     provider: RpcProvider
     account: Account
     coreAddress: string
     worldAddress: string
     coreContract: Contract
+    db: SqliteDb
 
     constructor(
         nodeUrl: string,
         toriiUrl: string,
         address: string,
         private_key: string,
-        dbName: string
+        storageDir: string
     ) {
         this.nodeUrl = nodeUrl
         this.toriiUrl = toriiUrl
-        this.provider = new RpcProvider({nodeUrl})
-
+        this.storageDir = storageDir
         this.account = new Account(
             this.provider,
             address,
             private_key);
-        this.dbName = dbName
+        this.db = new SqliteDb(`${storageDir}/QueueHandler.sqlite` )
+        this.provider = new RpcProvider({nodeUrl})
     }
 
 
     async getEvents() {
 
-        const db = new SqliteDb(this.dbName)
-        await db.open()
-        const lastProcessedBlocknumber = await db.getLastBlockNumber()
+        await this.db.open()
+        const lastProcessedBlocknumber = await this.db.getLastBlockNumber()
         const {block_number: lastBlocknumber} = await this.provider.getBlockLatestAccepted()
 
         if (lastProcessedBlocknumber == lastBlocknumber) return
@@ -93,7 +93,7 @@ class QueueHandler {
             for(let event of parsedEvents){
                 if (event.hasOwnProperty("QueueScheduled")) {
 
-                    await db.setQueueItemPending({
+                    await this.db.setQueueItemPending({
                         id: num.toHex(<BigNumberish>event.QueueScheduled.id),
                         timestamp: Number(event.QueueScheduled.timestamp),
                         called_system: num.toHex(<BigNumberish>event.QueueScheduled.called_system),
@@ -102,11 +102,11 @@ class QueueHandler {
                         calldata: event.QueueScheduled.calldata.map(e => num.toHex(e))
                     })
                 } else if (event.hasOwnProperty("QueueProcessed")) {
-                    await db.removeQueueItemPending(num.toHex(<BigNumberish>event.QueueProcessed.id))
+                    await this.db.removeQueueItemPending(num.toHex(<BigNumberish>event.QueueProcessed.id))
                 }
             }
 
-            const pendingFromDb = await db.getQueueItemPending(now)
+            const pendingFromDb = await this.db.getQueueItemPending(now)
 
             const testedItems = []
             for (const item of pendingFromDb) {
@@ -130,7 +130,7 @@ class QueueHandler {
                     } else {
                         try {
                             // This one fails, move it to error
-                            await db.movePendingToError(item.id, e.message)
+                            await this.db.movePendingToError(item.id, e.message)
                         } catch (ea) {
                             log(`movePendingToError db error: ${ea.message}`)
                         }
@@ -162,14 +162,14 @@ class QueueHandler {
             }
 
             // Mark the retrieved latest blocknumber as done
-            await db.setLastBlockNumber(lastBlocknumber)
+            await this.db.setLastBlockNumber(lastBlocknumber)
 
         } catch (e) {
             // TODO Handle this general error
             console.error(e)
             log(`getEvents failed: ${e.message}`)
         } finally {
-            await db.close()
+            await this.db.close()
         }
     }
 
@@ -179,9 +179,9 @@ class QueueHandler {
         toriiUrl: string,
         address: string,
         private_key: string,
-        dbName: string,
+        storageDir: string,
     ): Promise<QueueHandler> {
-        const handler = new QueueHandler(nodeUrl, toriiUrl, address, private_key, dbName);
+        const handler = new QueueHandler(nodeUrl, toriiUrl, address, private_key, storageDir);
 
         const {worldAddress, coreAddress} = await getAddresses(toriiUrl)
         handler.worldAddress = worldAddress

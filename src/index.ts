@@ -10,14 +10,13 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const options = {
+const forkOptions = {
     execArgv: [
         '-r', 'ts-node/register',
         // '--inspect-brk=9230'
     ]
 };
 
-const queueHandler = fork('./src/QueueHandler/index.ts', [], options);
 
 
 const app = express();
@@ -31,18 +30,15 @@ app.use('/', express.static(process.env["WEB_DIR"]));
 
 app.get('/tiles/:filename.png', async (req, res) => {
     
-    const filePath = path.join(process.cwd(), '/assets/tiles/', req.params.filename + '.png');
+    const filePath = path.join(process.env["TILES_DIR"], req.params.filename + '.png');
 
     try {
         const exists = await fse.pathExists(filePath);
         if (exists) {
             res.sendFile(filePath);
         } else {
-            res.writeHead(200, {
-                'Content-Type': 'image/png',
-                'Content-Length': EMPTY_PNG.length
-            });
-            res.end(EMPTY_PNG);
+            console.log(req.params.filename, "not found")
+            res.sendStatus(404);
         }
     } catch (error) {
         console.error(error);
@@ -50,19 +46,31 @@ app.get('/tiles/:filename.png', async (req, res) => {
     }
 });
 
-
-
 app.listen(port, () => {
     console.log(`Webserver listening on port ${port}`);
 });
 
-// Start QueueHandler
-queueHandler.on('message', (message: Message) => {
-    console.log('QueueHandler: ', message.data);
-});
+// // Start QueueHandler
+// const queueHandler = fork('./src/QueueHandler/index.ts', [], forkOptions);
+//
+// queueHandler
+//     .on('message', (message: Message) => {
+//         console.log('QueueHandler: ', message.data);
+//     })
+//     .on('error', (error) => {
+//         console.error('QueueHandler Error: ', error);
+//     })
+//     .send({cmd: 'start'});
 
-queueHandler.on('error', (error) => {
-    console.error('QueueHandler Error: ', error);
-});
 
-// queueHandler.send({cmd: 'start'});
+// Start TileCacher
+const tileCacher = fork('./src/TileCacher/index.ts', [], forkOptions);
+
+tileCacher
+    .on('message', (message: Message) => {
+        console.log('TileCacher: ', message.data);
+    })
+    .on('error', (error) => {
+        console.error('TileCacher Error: ', error);
+    })
+    .send({cmd: 'start'});
