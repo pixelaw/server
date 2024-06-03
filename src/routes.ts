@@ -7,7 +7,7 @@ export async function setupRoutes(app) {
 
     app.get('/tiles/:filename.png', async (req, res) => {
 
-        const filePath = path.join(process.env["TILES_DIR"], req.params.filename + '.png');
+        const filePath = path.join(process.cwd() , process.env["TILES_DIR"], req.params.filename + '.png');
 
         try {
             const exists = await fse.pathExists(filePath);
@@ -18,7 +18,7 @@ export async function setupRoutes(app) {
                 res.sendStatus(404);
             }
         } catch (error) {
-            console.error(error);
+            console.error(filePath, error);
             res.status(500).send('Server error');
         }
     });
