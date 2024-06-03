@@ -26,7 +26,6 @@ let handler: TileCacher
 let running = true
 
 
-
 class TileCacher {
     nodeUrl: string
     toriiUrl: string
@@ -63,7 +62,6 @@ class TileCacher {
         if (lastProcessedBlocknumber == lastBlocknumber) return
 
         log(`getEvents: chainBlockNr: ${lastBlocknumber} lastProcessedBlocknr: ${lastProcessedBlocknumber}`)
-
 
         try {
 
@@ -116,7 +114,7 @@ class TileCacher {
 
                 // Update the pixel at (x, y)
                 const idx = (png.width * y + x) << 2;
-                png.data[idx] = r;     // Red
+                png.data[idx] = r;       // Red
                 png.data[idx + 1] = g;   // Green
                 png.data[idx + 2] = b;   // Blue
                 png.data[idx + 3] = a;   // Alpha
@@ -124,7 +122,11 @@ class TileCacher {
                 // Save the updated PNG
                 fs.writeFileSync(filePath, PNG.sync.write(png));
 
-                // TODO post a message to TileCacher websocket subscribers
+                // Post a message to TileCacher websocket subscribers
+                if (process.send) {
+                    const message: Message = {cmd: "tileUpdated", data: JSON.stringify([tileX, tileY])};
+                    process.send(message);
+                }
             }
 
             // Mark the retrieved latest blocknumber as done
@@ -138,7 +140,6 @@ class TileCacher {
             await this.db.close()
         }
     }
-
 
     static async create(
         nodeUrl: string,
