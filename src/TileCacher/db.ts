@@ -5,7 +5,6 @@ import path from 'path';
 
 import {open} from 'sqlite'
 
-
 export class SqliteDb {
     private db: Database;
 

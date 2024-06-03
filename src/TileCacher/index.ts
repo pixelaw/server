@@ -8,6 +8,7 @@ import {
 import {SqliteDb} from "./db";
 import {sleep} from '../utils/sleep';
 import {getAddresses} from "../utils/getAddresses";
+import {Message} from "../types";
 
 
 export const PIXEL_CHANGED_EVENT = "0x1a2f334228cee715f1f0f54053bb6b5eac54fa336e0bc1aacf7516decb0471d"
@@ -15,11 +16,6 @@ export const PIXEL_CHANGED_EVENT = "0x1a2f334228cee715f1f0f54053bb6b5eac54fa336e
 // TODO proper parameterization for this, and handle more scalefactors
 const TILE_1_SIZE: number = parseInt(process.env["TILE_1_SIZE"])
 const scaleFactor = 1
-
-export type Message = {
-    cmd: string;
-    data: string
-};
 
 
 let handler: TileCacher

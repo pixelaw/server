@@ -8,16 +8,12 @@ import {
 import {SqliteDb} from "./db";
 import {getAddresses} from "../utils/getAddresses";
 import { sleep } from '../utils/sleep';
+import {Message} from "../types";
 
 // Approx Blocktime so we can minimize submitting items early
 const BLOCKTIME_MS = 3000
 export const QUEUE_STARTED_KEY_EVENT = "0x1c4fa7f75d1ea055adccbf8f86b75224181a3036d672762185805e0b999ad65"
 export const QUEUE_FINISHED_KEY_EVENT = "0x16c4dd771da9a5cb32846fbb15c1b614da08fb5267af2fcce902a4c416e76cf"
-
-export type Message = {
-    cmd: string;
-    data: string
-};
 
 export interface QueueItem {
     id: string,
@@ -49,6 +45,7 @@ class QueueHandler {
         storageDir: string
     ) {
         this.nodeUrl = nodeUrl
+        this.provider = new RpcProvider({nodeUrl})
         this.toriiUrl = toriiUrl
         this.storageDir = storageDir
         this.account = new Account(
@@ -56,7 +53,6 @@ class QueueHandler {
             address,
             private_key);
         this.db = new SqliteDb(`${storageDir}/QueueHandler.sqlite` )
-        this.provider = new RpcProvider({nodeUrl})
     }
 
 
