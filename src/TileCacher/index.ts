@@ -89,7 +89,8 @@ class TileCacher {
 
 
                 let png;
-                const filePath = `${this.tileDir}/${scaleFactor}_${TILE_1_SIZE}_${tileX}_${tileY}.png`;
+                const tileName = `${scaleFactor}_${TILE_1_SIZE}_${tileX}_${tileY}`
+                const filePath = `${this.tileDir}/${tileName}.png`;
 
                 if (fs.existsSync(filePath)) {
                     // Load the existing PNG
@@ -120,8 +121,10 @@ class TileCacher {
 
                 // Post a message to TileCacher websocket subscribers
                 if (process.send) {
-                    const message: Message = {cmd: "tileUpdated", data: JSON.stringify([tileX, tileY])};
+                    const message: Message = {cmd: "tileUpdated", data: JSON.stringify({tileCoord: [tileX, tileY], tileName})};
                     process.send(message);
+                }else{
+                    console.log("notsending")
                 }
             }
 
@@ -191,7 +194,7 @@ async function loop(handler: TileCacher) {
         } catch (e) {
             log(`TileCacher failed: ${e.message}`)
         }
-        await sleep(3000)
+        await sleep(1000)
     }
 }
 

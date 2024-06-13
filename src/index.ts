@@ -21,10 +21,11 @@ const port: number = parseInt(process.env["SERVER_PORT"]) ?? 3000;
 
 setupRoutes(app)
 
-setupQueueHandler()
+// setupQueueHandler()
 
-const wss = setupWebsockets(server)
-setupTileCacher(wss)
+setupWebsockets(server).then(wss => {
+    setupTileCacher(wss);
+});
 
 server.listen(port, () => {
     console.log(`Webserver listening on port ${port}`);

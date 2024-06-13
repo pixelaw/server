@@ -1,38 +1,44 @@
 import {fork} from "child_process";
 import {Bounds, Coordinate, FORK_OPTIONS, Message} from "./types";
+import WebSocket from 'ws';
+import {CustomClient} from "./websockets";
+import {isTileWithinBoundingBox} from "./utils/coordinates";
 
-function isTileWithinBoundingBox(coordinate: Coordinate, boundingBox: Bounds): boolean {
-    const [x, y] = coordinate;
-    const [[left, top], [right, bottom]] = boundingBox;
 
-    return x >= left && x <= right && y >= top && y <= bottom;
-}
 
 export async function setupTileCacher(wss) {
 
-// Start TileCacher
+    // Start TileCacher
     const tileCacher = fork('./src/TileCacher/index.ts', [], FORK_OPTIONS);
 
-    tileCacher
-        .on('error', (error) => {
-            console.error('TileCacher Error: ', error);
-        })
-        .on('message', ({cmd, data}: Message) => {
-            if (cmd == "tileUpdated") {
-                const tileCoord: Coordinate = JSON.parse(data)
 
-                wss.clients.forEach((client) => {
-                    if (client.readyState === WebSocket.OPEN) {
-                        if (
-                            client.boundingBox
-                            && isTileWithinBoundingBox(tileCoord, client.boundingBox)
-                        ) {
-                            client.send(tileCoord);
-                        }
+    tileCacher.on('error', (error) => {
+        console.error('TileCacher Error: ', error);
+    })
+
+    tileCacher.on('message', ({cmd, data}: Message) => {
+        if (cmd == "tileUpdated") {
+            const {tileCoord, tileName} = JSON.parse(data)
+
+
+            wss.clients.forEach((client: CustomClient) => {
+                console.log("gonna send", client.readyState)
+                if (client.readyState === WebSocket.OPEN) {
+                    if (
+                        client.boundingBox
+                        && isTileWithinBoundingBox(tileCoord, client.boundingBox)
+                    ) {
+                        const msg = JSON.stringify({cmd: "tileChanged", data: {tileName, timestamp: Date.now()}})
+                        client.send(msg);
+                        console.log("sent:", JSON.stringify({cmd: "tileChanged", data: tileName}))
+                    }else{
+                        console.log("not in boundingbox")
                     }
-                })
-            }
-        })
-        .send({cmd: 'start'});
+                }
+            })
+        }
+    })
+
+    tileCacher.send({cmd: 'start'});
 
 }
