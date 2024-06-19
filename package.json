@@ -8,8 +8,7 @@
     "tilegen": "ts-node src/cli/generateTiles.ts assets/drawing.png 100 1",
     "server": "ts-node src/index.ts",
     "queuehandler": "ts-node src/QueueHandler/index.ts",
-    "selector": "tsx utils/selector.ts",
-    "postinstall": "patch-package"
+    "selector": "tsx utils/selector.ts"
   },
   "dependencies": {
     "@apollo/client": "^3.8.4",
@@ -26,7 +25,6 @@
     "graphql-tag": "^2.12.6",
     "graphql-ws": "^5.14.2",
     "lodash": "^4.17.21",
-    "patch-package": "^8.0.0",
     "pngjs": "^7.0.0",
     "postinstall-postinstall": "^2.1.0",
     "sqlite": "^5.1.1",
