@@ -1,7 +1,7 @@
 {
   "name": "pixelaw-server",
   "description": "NodeExpress backend for \"bots\" and other optimizations",
-  "version": "0.3.11",
+  "version": "0.3.12",
   "main": "index.js",
   "license": "MIT",
   "scripts": {
