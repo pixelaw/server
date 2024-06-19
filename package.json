@@ -1,7 +1,7 @@
 {
   "name": "pixelaw-server",
   "description": "NodeExpress backend for \"bots\" and other optimizations",
-  "version": "0.3.10",
+  "version": "0.3.11",
   "main": "index.js",
   "license": "MIT",
   "scripts": {
@@ -31,7 +31,7 @@
     "postinstall-postinstall": "^2.1.0",
     "sqlite": "^5.1.1",
     "sqlite3": "^5.1.7",
-    "starknet": "5.24.3",
+    "starknet": "^6.10.0",
     "ws": "^8.17.0"
   },
   "devDependencies": {
