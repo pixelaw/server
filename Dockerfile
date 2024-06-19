@@ -18,7 +18,6 @@ RUN \
 WORKDIR /app
 
 
-COPY patches ./patches
 COPY package.json yarn.lock ./
 
 # Install dependencies
