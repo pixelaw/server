@@ -1,11 +1,11 @@
 {
   "name": "pixelaw-server",
   "description": "NodeExpress backend for \"bots\" and other optimizations",
-  "version": "0.3.10",
+  "version": "0.3.11",
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "old": "ts-node src/old.ts",
+    "tilegen": "ts-node src/cli/generateTiles.ts assets/drawing.png 100 1",
     "server": "ts-node src/index.ts",
     "queuehandler": "ts-node src/QueueHandler/index.ts",
     "selector": "tsx utils/selector.ts",
@@ -15,7 +15,10 @@
     "@apollo/client": "^3.8.4",
     "@aws-sdk/client-s3": "^3.418.0",
     "@types/fs-extra": "^11.0.4",
+    "@types/pngjs": "^6.0.5",
+    "@types/ws": "^8.5.10",
     "abi-wan-kanabi": "^2.2.2",
+    "cors": "^2.8.5",
     "dotenv": "^16.3.1",
     "express": "^4.19.2",
     "fs-extra": "^11.2.0",
@@ -28,8 +31,8 @@
     "postinstall-postinstall": "^2.1.0",
     "sqlite": "^5.1.1",
     "sqlite3": "^5.1.7",
-    "starknet": "5.24.3",
-    "ws": "^8.15.0"
+    "starknet": "^6.10.0",
+    "ws": "^8.17.0"
   },
   "devDependencies": {
     "@types/node": "^20.7.0",

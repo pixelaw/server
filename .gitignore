@@ -1,3 +1,6 @@
+# dev
+assets/tiles
+
 # App specific
 web/
 .idea

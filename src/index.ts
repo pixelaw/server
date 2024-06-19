@@ -1,38 +1,32 @@
+import http from 'http';
+
 import express from 'express';
-import {fork} from 'child_process';
-import {Message} from "./QueueHandler";
+import cors from 'cors';
 
 import dotenv from 'dotenv';
-
 dotenv.config();
 
-const options = {
-    execArgv: [
-        '-r', 'ts-node/register',
-        // '--inspect-brk=9230'
-    ]
-};
-
-const queueHandler = fork('./src/QueueHandler/index.ts', [], options);
+import {setupTileCacher} from "./tileCacher";
+import {setupQueueHandler} from "./queueHandler";
+import {setupWebsockets} from "./websockets";
+import {setupRoutes} from "./routes";
 
 
 const app = express();
+const server = http.createServer(app);
+
+app.use(cors()); // Use cors middleware
+
 const port: number = parseInt(process.env["SERVER_PORT"]) ?? 3000;
 
+setupRoutes(app)
 
-app.use('/', express.static(process.env["WEB_DIR"]));
+// setupQueueHandler()
 
-app.listen(port, () => {
+setupWebsockets(server).then(wss => {
+    setupTileCacher(wss);
+});
+
+server.listen(port, () => {
     console.log(`Webserver listening on port ${port}`);
 });
-
-// Start QueueHandler
-queueHandler.on('message', (message: Message) => {
-    console.log('QueueHandler: ', message.data);
-});
-
-queueHandler.on('error', (error) => {
-    console.error('QueueHandler Error: ', error);
-});
-
-queueHandler.send({cmd: 'start'});
