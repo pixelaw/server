@@ -9,18 +9,20 @@ import {SqliteDb} from "./db";
 import {sleep} from '../utils/sleep';
 import {getAddresses} from "../utils/getAddresses";
 import {Message} from "../types";
+import path from "path";
 
 
 export const PIXEL_CHANGED_EVENT = "0x1a2f334228cee715f1f0f54053bb6b5eac54fa336e0bc1aacf7516decb0471d"
 
 // TODO proper parameterization for this, and handle more scalefactors
-const TILE_1_SIZE: number = parseInt(process.env["TILE_1_SIZE"])
+const TILE_1_SIZE: number = parseInt(process.env["TILE_1_SIZE"] ?? "100")
 const scaleFactor = 1
 
 
 let handler: TileCacher
 let running = true
 
+const TILE_TEMPLATE_DIR = path.join(process.cwd(),"assets/tiles/")
 
 class TileCacher {
     nodeUrl: string
@@ -97,7 +99,7 @@ class TileCacher {
                     png = PNG.sync.read(fs.readFileSync(filePath));
                 } else {
                     // Create a new PNG
-                    fs.copyFileSync(`${this.tileDir}/${scaleFactor}_${TILE_1_SIZE}_template.png`, filePath);
+                    fs.copyFileSync(`${TILE_TEMPLATE_DIR}/${scaleFactor}_${TILE_1_SIZE}_template.png`, filePath);
                     png = PNG.sync.read(fs.readFileSync(filePath));
                 }
 
@@ -121,9 +123,12 @@ class TileCacher {
 
                 // Post a message to TileCacher websocket subscribers
                 if (process.send) {
-                    const message: Message = {cmd: "tileUpdated", data: JSON.stringify({tileCoord: [tileX, tileY], tileName})};
+                    const message: Message = {
+                        cmd: "tileUpdated",
+                        data: JSON.stringify({tileCoord: [tileX, tileY], tileName})
+                    };
                     process.send(message);
-                }else{
+                } else {
                     console.log("notsending")
                 }
             }
@@ -156,6 +161,10 @@ class TileCacher {
         if (coreAbi === undefined) throw new Error('no abi.');
 
         handler.coreContract = new Contract(coreAbi, coreAddress, handler.provider);
+
+        if (!fs.existsSync(tilesDir)) {
+            fs.mkdirSync(tilesDir, { recursive: true });
+        }
 
         const filePath = `${tilesDir}/${scaleFactor}_${TILE_1_SIZE}_template.png`;
 
@@ -212,13 +221,14 @@ process.on('message', async (message: Message) => {
     if (message.cmd === 'start') {
         running = true;
         try {
-            handler = await TileCacher.create(
-                process.env["STARKNET_RPC"] ?? "http://127.0.0.1:5050",
-                process.env["TORII_URL"] ?? "http://127.0.0.1:8080",
-                process.env["STORAGE_DIR"] ?? './storage',
-                process.env["TILES_DIR"] ?? './tiles',
-            )
+            const nodeUrl = process.env["STARKNET_RPC"] ?? "http://127.0.0.1:5050"
+            const toriiUrl = process.env["TORII_URL"] ?? "http://127.0.0.1:8080"
+            const storageDir = process.env["STORAGE_DIR"] ?? './storage'
+            const tilesDir = process.env["TILES_DIR"] ?? `${storageDir}/tiles`
+
+            handler = await TileCacher.create(nodeUrl, toriiUrl, storageDir, tilesDir)
             await loop(handler);
+
         } catch (err) {
             console.error('Failed to start QueueBot', err);
         }

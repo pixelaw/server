@@ -21,7 +21,7 @@ const port: number = parseInt(process.env["SERVER_PORT"]) ?? 3000;
 
 setupRoutes(app)
 
-// setupQueueHandler()
+setupQueueHandler()
 
 setupWebsockets(server).then(wss => {
     setupTileCacher(wss);

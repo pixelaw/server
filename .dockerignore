@@ -1,0 +1,4 @@
+./storage
+./github
+./web
+./.env*
