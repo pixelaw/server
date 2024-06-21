@@ -104,19 +104,18 @@ class TileCacher {
                 }
 
                 // Extract color components from color string
-                // TODO temporarily did ARGB because the old web frontend sends ARGB instead of RGBA
                 const colorInt = parseInt(color, 16);
-                const a = (colorInt >> 24) & 255;
-                const r = (colorInt >> 16) & 255;
-                const g = (colorInt >> 8) & 255;
-                const b = colorInt & 255;
+                const r = (colorInt >> 24) & 255;
+                const g = (colorInt >> 16) & 255;
+                const b = (colorInt >> 8) & 255;
+                const a = colorInt & 255;
 
                 // Update the pixel at (x, y)
                 const idx = (png.width * y + x) << 2;
                 png.data[idx] = r;       // Red
                 png.data[idx + 1] = g;   // Green
                 png.data[idx + 2] = b;   // Blue
-                png.data[idx + 3] = a;   // Alpha
+                png.data[idx + 3] = 255;   // Alpha TODO, now hardcoded to 255
 
                 // Save the updated PNG
                 fs.writeFileSync(filePath, PNG.sync.write(png));
