@@ -3,6 +3,7 @@ import {Bounds, Coordinate, MAX_UINT32} from "../types";
 
 const MAX_BOX = 100000
 export function isTileWithinBoundingBox(coordinate: Coordinate, boundingBox: Bounds): boolean {
+    console.log("isTileWithinBoundingBox", coordinate, JSON.stringify(boundingBox))
     let [x, y] = coordinate
     let [[left, top], [right, bottom]] = boundingBox
 

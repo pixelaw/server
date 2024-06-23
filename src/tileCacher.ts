@@ -5,7 +5,6 @@ import {CustomClient} from "./websockets";
 import {isTileWithinBoundingBox} from "./utils/coordinates";
 
 
-
 export async function setupTileCacher(wss) {
 
     // Start TileCacher
@@ -23,15 +22,13 @@ export async function setupTileCacher(wss) {
 
             wss.clients.forEach((client: CustomClient) => {
                 console.log("gonna send", client.readyState)
-                if (client.readyState === WebSocket.OPEN) {
-                    if (
-                        client.boundingBox
-                        && isTileWithinBoundingBox(tileCoord, client.boundingBox)
-                    ) {
+                if (client.readyState === WebSocket.OPEN && client.boundingBox) {
+
+                    if (isTileWithinBoundingBox(tileCoord, client.boundingBox)) {
                         const msg = JSON.stringify({cmd: "tileChanged", data: {tileName, timestamp: Date.now()}})
                         client.send(msg);
                         console.log("sent:", JSON.stringify({cmd: "tileChanged", data: tileName}))
-                    }else{
+                    } else {
                         console.log("not in boundingbox")
                     }
                 }
