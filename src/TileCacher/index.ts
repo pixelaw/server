@@ -220,7 +220,7 @@ process.on('message', async (message: Message) => {
     if (message.cmd === 'start') {
         running = true;
         try {
-            const nodeUrl = process.env["STARKNET_RPC"] ?? "http://127.0.0.1:5050"
+            const nodeUrl = process.env["RPC_URL"] ?? "http://127.0.0.1:5050"
             const toriiUrl = process.env["TORII_URL"] ?? "http://127.0.0.1:8080"
             const storageDir = process.env["STORAGE_DIR"] ?? './storage'
             const tilesDir = process.env["TILES_DIR"] ?? `${storageDir}/tiles`
@@ -239,7 +239,7 @@ process.on('message', async (message: Message) => {
 
 async function main() {
     handler = await TileCacher.create(
-        process.env["STARKNET_RPC"] ?? "http://127.0.0.1:5050",
+        process.env["RPC_URL"] ?? "http://127.0.0.1:5050",
         process.env["TORII_URL"] ?? "http://127.0.0.1:8080",
         process.env["STORAGE_DIR"] ?? './storage',
         process.env["TILES_DIR"] ?? './storage',
