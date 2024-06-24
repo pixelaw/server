@@ -6,8 +6,9 @@ export async function setupRoutes(app) {
     app.use('/', express.static(process.env["WEB_DIR"]));
 
     app.get('/tiles/:filename.png', async (req, res) => {
-
-        const filePath = path.join(process.cwd() , process.env["TILES_DIR"], req.params.filename + '.png');
+        const storageDir = process.env["STORAGE_DIR"] ?? './storage'
+        const tilesDir = process.env["TILES_DIR"] ?? `${storageDir}/tiles`
+        const filePath = path.join(tilesDir, req.params.filename + '.png');
 
         try {
             const exists = await fse.pathExists(filePath);
