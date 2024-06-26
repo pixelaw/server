@@ -1,13 +1,13 @@
 import express from 'express';
 import path from "path";
 import fse from "fs-extra";
+import {tilesDir} from "./config";
 
 export async function setupRoutes(app) {
     app.use('/', express.static(process.env["WEB_DIR"]));
 
     app.get('/tiles/:filename.png', async (req, res) => {
-        const storageDir = process.env["STORAGE_DIR"] ?? './storage'
-        const tilesDir = process.env["TILES_DIR"] ?? `${storageDir}/tiles`
+
         const filePath = path.join(tilesDir, req.params.filename + '.png');
 
         try {
