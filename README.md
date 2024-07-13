@@ -1,4 +1,4 @@
 # server
 NodeExpress backend for "bots" and other optimizations
 
-Version 0.3.18
+Version 0.3.19
