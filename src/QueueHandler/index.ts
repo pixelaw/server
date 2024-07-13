@@ -87,20 +87,22 @@ class QueueHandler {
             )
 
             for(let event of parsedEvents){
-                if (event.hasOwnProperty("QueueScheduled")) {
-
+                if (event.hasOwnProperty("pixelaw::core::actions::actions::QueueScheduled")) {
+                    const ev = event["pixelaw::core::actions::actions::QueueScheduled"]
                     await this.db.setQueueItemPending({
-                        id: num.toHex(<BigNumberish>event.QueueScheduled.id),
-                        timestamp: Number(event.QueueScheduled.timestamp),
-                        called_system: num.toHex(<BigNumberish>event.QueueScheduled.called_system),
-                        selector: num.toHex(<BigNumberish>event.QueueScheduled.selector),
+                        id: num.toHex(<BigNumberish>ev.id),
+                        timestamp: Number(ev.timestamp),
+                        called_system: num.toHex(<BigNumberish>ev.called_system),
+                        selector: num.toHex(<BigNumberish>ev.selector),
                         // @ts-ignore because we're sure that calldata is always an array.
-                        calldata: event.QueueScheduled.calldata.map(e => num.toHex(e))
+                        calldata: ev.calldata.map(e => num.toHex(e))
                     })
-                } else if (event.hasOwnProperty("QueueProcessed")) {
-                    await this.db.removeQueueItemPending(num.toHex(<BigNumberish>event.QueueProcessed.id))
+                } else if (event.hasOwnProperty("pixelaw::core::actions::actions::QueueProcessed")) {
+                    const ev = event["pixelaw::core::actions::actions::QueueProcessed"]
+                    await this.db.removeQueueItemPending(num.toHex(<BigNumberish>ev.id))
                 }
             }
+
 
             const pendingFromDb = await this.db.getQueueItemPending(now)
 
