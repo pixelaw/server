@@ -60,12 +60,12 @@ class TileCacher {
 
             for (const { data } of eventsList.events) {
                 // TODO doublecheck if this value indeed means "Pixel" model change
-                if (data[0] !== "0x21922b76535ad378ce956322c30892a24e6b4db6bdc7043b07387cb3b0d8554") continue
+                if (data[0] !== "0x7e607b2fbb4cfb3fb9d1258fa2ff3aa94f17b3820e42bf1e6a43e2de3f5772e") continue
 
                 const x = Number.parseInt(data[2], 16)
                 const y = Number.parseInt(data[3], 16)
 
-                const color = data[8]
+                const color = data[6]
 
                 console.log(x, y, color)
 
