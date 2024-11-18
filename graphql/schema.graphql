@@ -1,1188 +1,1728 @@
 schema {
-    query: World__Query
-    subscription: World__Subscription
-}
-
-type App {
-    system: ContractAddress
-    name: felt252
-    manifest: felt252
-    icon: felt252
-    action: felt252
-    entity: World__Entity
-}
-
-type AppConnection {
-    edges: [AppEdge]
-    totalCount: Int!
-    pageInfo: World__PageInfo!
-}
-
-type AppEdge {
-    node: App
-    cursor: Cursor
-}
-
-type AppName {
-    name: felt252
-    system: ContractAddress
-    entity: World__Entity
-}
-
-type AppNameConnection {
-    edges: [AppNameEdge]
-    totalCount: Int!
-    pageInfo: World__PageInfo!
-}
-
-type AppNameEdge {
-    node: AppName
-    cursor: Cursor
-}
-
-input AppNameOrder {
-    direction: OrderDirection!
-    field: AppNameOrderField!
-}
-
-enum AppNameOrderField {
-    NAME
-    SYSTEM
-}
-
-input AppNameWhereInput {
-    name: felt252
-    nameGT: felt252
-    nameGTE: felt252
-    nameLT: felt252
-    nameLTE: felt252
-    nameNEQ: felt252
-    nameEQ: felt252
-    nameNOTIN: [felt252]
-    nameIN: [felt252]
-    nameNOTLIKE: felt252
-    nameLIKE: felt252
-    system: ContractAddress
-    systemGT: ContractAddress
-    systemGTE: ContractAddress
-    systemLT: ContractAddress
-    systemLTE: ContractAddress
-    systemNEQ: ContractAddress
-    systemEQ: ContractAddress
-    systemNOTIN: [ContractAddress]
-    systemIN: [ContractAddress]
-    systemNOTLIKE: ContractAddress
-    systemLIKE: ContractAddress
-}
-
-input AppOrder {
-    direction: OrderDirection!
-    field: AppOrderField!
-}
-
-enum AppOrderField {
-    SYSTEM
-    NAME
-    MANIFEST
-    ICON
-    ACTION
-}
-
-type AppUser {
-    system: ContractAddress
-    player: ContractAddress
-    action: felt252
-    entity: World__Entity
-}
-
-type AppUserConnection {
-    edges: [AppUserEdge]
-    totalCount: Int!
-    pageInfo: World__PageInfo!
-}
-
-type AppUserEdge {
-    node: AppUser
-    cursor: Cursor
-}
-
-input AppUserOrder {
-    direction: OrderDirection!
-    field: AppUserOrderField!
-}
-
-enum AppUserOrderField {
-    SYSTEM
-    PLAYER
-    ACTION
-}
-
-input AppUserWhereInput {
-    system: ContractAddress
-    systemGT: ContractAddress
-    systemGTE: ContractAddress
-    systemLT: ContractAddress
-    systemLTE: ContractAddress
-    systemNEQ: ContractAddress
-    systemEQ: ContractAddress
-    systemNOTIN: [ContractAddress]
-    systemIN: [ContractAddress]
-    systemNOTLIKE: ContractAddress
-    systemLIKE: ContractAddress
-    player: ContractAddress
-    playerGT: ContractAddress
-    playerGTE: ContractAddress
-    playerLT: ContractAddress
-    playerLTE: ContractAddress
-    playerNEQ: ContractAddress
-    playerEQ: ContractAddress
-    playerNOTIN: [ContractAddress]
-    playerIN: [ContractAddress]
-    playerNOTLIKE: ContractAddress
-    playerLIKE: ContractAddress
-    action: felt252
-    actionGT: felt252
-    actionGTE: felt252
-    actionLT: felt252
-    actionLTE: felt252
-    actionNEQ: felt252
-    actionEQ: felt252
-    actionNOTIN: [felt252]
-    actionIN: [felt252]
-    actionNOTLIKE: felt252
-    actionLIKE: felt252
-}
-
-input AppWhereInput {
-    system: ContractAddress
-    systemGT: ContractAddress
-    systemGTE: ContractAddress
-    systemLT: ContractAddress
-    systemLTE: ContractAddress
-    systemNEQ: ContractAddress
-    systemEQ: ContractAddress
-    systemNOTIN: [ContractAddress]
-    systemIN: [ContractAddress]
-    systemNOTLIKE: ContractAddress
-    systemLIKE: ContractAddress
-    name: felt252
-    nameGT: felt252
-    nameGTE: felt252
-    nameLT: felt252
-    nameLTE: felt252
-    nameNEQ: felt252
-    nameEQ: felt252
-    nameNOTIN: [felt252]
-    nameIN: [felt252]
-    nameNOTLIKE: felt252
-    nameLIKE: felt252
-    manifest: felt252
-    manifestGT: felt252
-    manifestGTE: felt252
-    manifestLT: felt252
-    manifestLTE: felt252
-    manifestNEQ: felt252
-    manifestEQ: felt252
-    manifestNOTIN: [felt252]
-    manifestIN: [felt252]
-    manifestNOTLIKE: felt252
-    manifestLIKE: felt252
-    icon: felt252
-    iconGT: felt252
-    iconGTE: felt252
-    iconLT: felt252
-    iconLTE: felt252
-    iconNEQ: felt252
-    iconEQ: felt252
-    iconNOTIN: [felt252]
-    iconIN: [felt252]
-    iconNOTLIKE: felt252
-    iconLIKE: felt252
-    action: felt252
-    actionGT: felt252
-    actionGTE: felt252
-    actionLT: felt252
-    actionLTE: felt252
-    actionNEQ: felt252
-    actionEQ: felt252
-    actionNOTIN: [felt252]
-    actionIN: [felt252]
-    actionNOTLIKE: felt252
-    actionLIKE: felt252
+  query: World__Query
+  subscription: World__Subscription
 }
 
 scalar ContractAddress
-
-type CoreActionsAddress {
-    key: felt252
-    value: ContractAddress
-    entity: World__Entity
-}
-
-type CoreActionsAddressConnection {
-    edges: [CoreActionsAddressEdge]
-    totalCount: Int!
-    pageInfo: World__PageInfo!
-}
-
-type CoreActionsAddressEdge {
-    node: CoreActionsAddress
-    cursor: Cursor
-}
-
-input CoreActionsAddressOrder {
-    direction: OrderDirection!
-    field: CoreActionsAddressOrderField!
-}
-
-enum CoreActionsAddressOrderField {
-    KEY
-    VALUE
-}
-
-input CoreActionsAddressWhereInput {
-    key: felt252
-    keyGT: felt252
-    keyGTE: felt252
-    keyLT: felt252
-    keyLTE: felt252
-    keyNEQ: felt252
-    keyEQ: felt252
-    keyNOTIN: [felt252]
-    keyIN: [felt252]
-    keyNOTLIKE: felt252
-    keyLIKE: felt252
-    value: ContractAddress
-    valueGT: ContractAddress
-    valueGTE: ContractAddress
-    valueLT: ContractAddress
-    valueLTE: ContractAddress
-    valueNEQ: ContractAddress
-    valueEQ: ContractAddress
-    valueNOTIN: [ContractAddress]
-    valueIN: [ContractAddress]
-    valueNOTLIKE: ContractAddress
-    valueLIKE: ContractAddress
-}
 
 scalar Cursor
 
 scalar DateTime
 
+type ERC__Balance {
+  balance: String!
+  type: String!
+  tokenMetadata: ERC__Token!
+}
+
+type ERC__Token {
+  name: String!
+  symbol: String!
+  tokenId: String!
+  decimals: String!
+  contractAddress: String!
+}
+
+type ERC__Transfer {
+  from: String!
+  to: String!
+  amount: String!
+  type: String!
+  executedAt: String!
+  tokenMetadata: ERC__Token!
+  transactionHash: String!
+}
+
 scalar Enum
 
-type Instruction {
-    system: ContractAddress
-    selector: felt252
-    instruction: felt252
-    entity: World__Entity
-}
-
-type InstructionConnection {
-    edges: [InstructionEdge]
-    totalCount: Int!
-    pageInfo: World__PageInfo!
-}
-
-type InstructionEdge {
-    node: Instruction
-    cursor: Cursor
-}
-
-input InstructionOrder {
-    direction: OrderDirection!
-    field: InstructionOrderField!
-}
-
-enum InstructionOrderField {
-    SYSTEM
-    SELECTOR
-    INSTRUCTION
-}
-
-input InstructionWhereInput {
-    system: ContractAddress
-    systemGT: ContractAddress
-    systemGTE: ContractAddress
-    systemLT: ContractAddress
-    systemLTE: ContractAddress
-    systemNEQ: ContractAddress
-    systemEQ: ContractAddress
-    systemNOTIN: [ContractAddress]
-    systemIN: [ContractAddress]
-    systemNOTLIKE: ContractAddress
-    systemLIKE: ContractAddress
-    selector: felt252
-    selectorGT: felt252
-    selectorGTE: felt252
-    selectorLT: felt252
-    selectorLTE: felt252
-    selectorNEQ: felt252
-    selectorEQ: felt252
-    selectorNOTIN: [felt252]
-    selectorIN: [felt252]
-    selectorNOTLIKE: felt252
-    selectorLIKE: felt252
-    instruction: felt252
-    instructionGT: felt252
-    instructionGTE: felt252
-    instructionLT: felt252
-    instructionLTE: felt252
-    instructionNEQ: felt252
-    instructionEQ: felt252
-    instructionNOTIN: [felt252]
-    instructionIN: [felt252]
-    instructionNOTLIKE: felt252
-    instructionLIKE: felt252
-}
-
 union ModelUnion =
-    Snake
-    | SnakeSegment
-    | Permissions
-    | Pixel
-    | QueueItem
-    | App
-    | AppName
-    | AppUser
-    | CoreActionsAddress
-    | Instruction
+    pixelaw_Moved
+  | pixelaw_AppName
+  | pixelaw_CoreActionsAddress
+  | pixelaw_AppUser
+  | pixelaw_Snake
+  | pixelaw_QueueItem
+  | pixelaw_Died
+  | pixelaw_RTree
+  | pixelaw_Pixel
+  | pixelaw_SnakeSegment
+  | pixelaw_Alert
+  | pixelaw_App
+  | pixelaw_Area
+  | pixelaw_QueueProcessed
+  | pixelaw_QueueScheduled
+  | pixelaw_Player
+  | pixelaw_Highscore
 
 enum OrderDirection {
-    ASC
-    DESC
-}
-
-type Permissions {
-    allowing_app: ContractAddress
-    allowed_app: ContractAddress
-    permission: Permissions_Permission
-    entity: World__Entity
-}
-
-type PermissionsConnection {
-    edges: [PermissionsEdge]
-    totalCount: Int!
-    pageInfo: World__PageInfo!
-}
-
-type PermissionsEdge {
-    node: Permissions
-    cursor: Cursor
-}
-
-input PermissionsOrder {
-    direction: OrderDirection!
-    field: PermissionsOrderField!
-}
-
-enum PermissionsOrderField {
-    ALLOWING_APP
-    ALLOWED_APP
-    PERMISSION
-}
-
-input PermissionsWhereInput {
-    allowing_app: ContractAddress
-    allowing_appGT: ContractAddress
-    allowing_appGTE: ContractAddress
-    allowing_appLT: ContractAddress
-    allowing_appLTE: ContractAddress
-    allowing_appNEQ: ContractAddress
-    allowing_appEQ: ContractAddress
-    allowing_appNOTIN: [ContractAddress]
-    allowing_appIN: [ContractAddress]
-    allowing_appNOTLIKE: ContractAddress
-    allowing_appLIKE: ContractAddress
-    allowed_app: ContractAddress
-    allowed_appGT: ContractAddress
-    allowed_appGTE: ContractAddress
-    allowed_appLT: ContractAddress
-    allowed_appLTE: ContractAddress
-    allowed_appNEQ: ContractAddress
-    allowed_appEQ: ContractAddress
-    allowed_appNOTIN: [ContractAddress]
-    allowed_appIN: [ContractAddress]
-    allowed_appNOTLIKE: ContractAddress
-    allowed_appLIKE: ContractAddress
-}
-
-type Permissions_Permission {
-    app: bool
-    color: bool
-    owner: bool
-    text: bool
-    timestamp: bool
-    action: bool
-}
-
-type Pixel {
-    x: u32
-    y: u32
-    created_at: u64
-    updated_at: u64
-    app: ContractAddress
-    color: u32
-    owner: ContractAddress
-    text: felt252
-    timestamp: u64
-    action: felt252
-    entity: World__Entity
-}
-
-type PixelConnection {
-    edges: [PixelEdge]
-    totalCount: Int!
-    pageInfo: World__PageInfo!
-}
-
-type PixelEdge {
-    node: Pixel
-    cursor: Cursor
-}
-
-input PixelOrder {
-    direction: OrderDirection!
-    field: PixelOrderField!
-}
-
-enum PixelOrderField {
-    X
-    Y
-    CREATED_AT
-    UPDATED_AT
-    APP
-    COLOR
-    OWNER
-    TEXT
-    TIMESTAMP
-    ACTION
-}
-
-input PixelWhereInput {
-    x: u32
-    xGT: u32
-    xGTE: u32
-    xLT: u32
-    xLTE: u32
-    xNEQ: u32
-    xEQ: u32
-    xNOTIN: [u32]
-    xIN: [u32]
-    xNOTLIKE: u32
-    xLIKE: u32
-    y: u32
-    yGT: u32
-    yGTE: u32
-    yLT: u32
-    yLTE: u32
-    yNEQ: u32
-    yEQ: u32
-    yNOTIN: [u32]
-    yIN: [u32]
-    yNOTLIKE: u32
-    yLIKE: u32
-    created_at: u64
-    created_atGT: u64
-    created_atGTE: u64
-    created_atLT: u64
-    created_atLTE: u64
-    created_atNEQ: u64
-    created_atEQ: u64
-    created_atNOTIN: [u64]
-    created_atIN: [u64]
-    created_atNOTLIKE: u64
-    created_atLIKE: u64
-    updated_at: u64
-    updated_atGT: u64
-    updated_atGTE: u64
-    updated_atLT: u64
-    updated_atLTE: u64
-    updated_atNEQ: u64
-    updated_atEQ: u64
-    updated_atNOTIN: [u64]
-    updated_atIN: [u64]
-    updated_atNOTLIKE: u64
-    updated_atLIKE: u64
-    app: ContractAddress
-    appGT: ContractAddress
-    appGTE: ContractAddress
-    appLT: ContractAddress
-    appLTE: ContractAddress
-    appNEQ: ContractAddress
-    appEQ: ContractAddress
-    appNOTIN: [ContractAddress]
-    appIN: [ContractAddress]
-    appNOTLIKE: ContractAddress
-    appLIKE: ContractAddress
-    color: u32
-    colorGT: u32
-    colorGTE: u32
-    colorLT: u32
-    colorLTE: u32
-    colorNEQ: u32
-    colorEQ: u32
-    colorNOTIN: [u32]
-    colorIN: [u32]
-    colorNOTLIKE: u32
-    colorLIKE: u32
-    owner: ContractAddress
-    ownerGT: ContractAddress
-    ownerGTE: ContractAddress
-    ownerLT: ContractAddress
-    ownerLTE: ContractAddress
-    ownerNEQ: ContractAddress
-    ownerEQ: ContractAddress
-    ownerNOTIN: [ContractAddress]
-    ownerIN: [ContractAddress]
-    ownerNOTLIKE: ContractAddress
-    ownerLIKE: ContractAddress
-    text: felt252
-    textGT: felt252
-    textGTE: felt252
-    textLT: felt252
-    textLTE: felt252
-    textNEQ: felt252
-    textEQ: felt252
-    textNOTIN: [felt252]
-    textIN: [felt252]
-    textNOTLIKE: felt252
-    textLIKE: felt252
-    timestamp: u64
-    timestampGT: u64
-    timestampGTE: u64
-    timestampLT: u64
-    timestampLTE: u64
-    timestampNEQ: u64
-    timestampEQ: u64
-    timestampNOTIN: [u64]
-    timestampIN: [u64]
-    timestampNOTLIKE: u64
-    timestampLIKE: u64
-    action: felt252
-    actionGT: felt252
-    actionGTE: felt252
-    actionLT: felt252
-    actionLTE: felt252
-    actionNEQ: felt252
-    actionEQ: felt252
-    actionNOTIN: [felt252]
-    actionIN: [felt252]
-    actionNOTLIKE: felt252
-    actionLIKE: felt252
-}
-
-type QueueItem {
-    id: felt252
-    valid: bool
-    entity: World__Entity
-}
-
-type QueueItemConnection {
-    edges: [QueueItemEdge]
-    totalCount: Int!
-    pageInfo: World__PageInfo!
-}
-
-type QueueItemEdge {
-    node: QueueItem
-    cursor: Cursor
-}
-
-input QueueItemOrder {
-    direction: OrderDirection!
-    field: QueueItemOrderField!
-}
-
-enum QueueItemOrderField {
-    ID
-    VALID
-}
-
-input QueueItemWhereInput {
-    id: felt252
-    idGT: felt252
-    idGTE: felt252
-    idLT: felt252
-    idLTE: felt252
-    idNEQ: felt252
-    idEQ: felt252
-    idNOTIN: [felt252]
-    idIN: [felt252]
-    idNOTLIKE: felt252
-    idLIKE: felt252
-    valid: bool
-}
-
-type Snake {
-    owner: ContractAddress
-    length: u8
-    first_segment_id: u32
-    last_segment_id: u32
-    direction: Enum
-    color: u32
-    text: felt252
-    is_dying: bool
-    entity: World__Entity
-}
-
-type SnakeConnection {
-    edges: [SnakeEdge]
-    totalCount: Int!
-    pageInfo: World__PageInfo!
-}
-
-type SnakeEdge {
-    node: Snake
-    cursor: Cursor
-}
-
-input SnakeOrder {
-    direction: OrderDirection!
-    field: SnakeOrderField!
-}
-
-enum SnakeOrderField {
-    OWNER
-    LENGTH
-    FIRST_SEGMENT_ID
-    LAST_SEGMENT_ID
-    DIRECTION
-    COLOR
-    TEXT
-    IS_DYING
-}
-
-type SnakeSegment {
-    id: u32
-    previous_id: u32
-    next_id: u32
-    x: u32
-    y: u32
-    pixel_original_color: u32
-    pixel_original_text: felt252
-    pixel_original_app: ContractAddress
-    entity: World__Entity
-}
-
-type SnakeSegmentConnection {
-    edges: [SnakeSegmentEdge]
-    totalCount: Int!
-    pageInfo: World__PageInfo!
-}
-
-type SnakeSegmentEdge {
-    node: SnakeSegment
-    cursor: Cursor
-}
-
-input SnakeSegmentOrder {
-    direction: OrderDirection!
-    field: SnakeSegmentOrderField!
-}
-
-enum SnakeSegmentOrderField {
-    ID
-    PREVIOUS_ID
-    NEXT_ID
-    X
-    Y
-    PIXEL_ORIGINAL_COLOR
-    PIXEL_ORIGINAL_TEXT
-    PIXEL_ORIGINAL_APP
-}
-
-input SnakeSegmentWhereInput {
-    id: u32
-    idGT: u32
-    idGTE: u32
-    idLT: u32
-    idLTE: u32
-    idNEQ: u32
-    idEQ: u32
-    idNOTIN: [u32]
-    idIN: [u32]
-    idNOTLIKE: u32
-    idLIKE: u32
-    previous_id: u32
-    previous_idGT: u32
-    previous_idGTE: u32
-    previous_idLT: u32
-    previous_idLTE: u32
-    previous_idNEQ: u32
-    previous_idEQ: u32
-    previous_idNOTIN: [u32]
-    previous_idIN: [u32]
-    previous_idNOTLIKE: u32
-    previous_idLIKE: u32
-    next_id: u32
-    next_idGT: u32
-    next_idGTE: u32
-    next_idLT: u32
-    next_idLTE: u32
-    next_idNEQ: u32
-    next_idEQ: u32
-    next_idNOTIN: [u32]
-    next_idIN: [u32]
-    next_idNOTLIKE: u32
-    next_idLIKE: u32
-    x: u32
-    xGT: u32
-    xGTE: u32
-    xLT: u32
-    xLTE: u32
-    xNEQ: u32
-    xEQ: u32
-    xNOTIN: [u32]
-    xIN: [u32]
-    xNOTLIKE: u32
-    xLIKE: u32
-    y: u32
-    yGT: u32
-    yGTE: u32
-    yLT: u32
-    yLTE: u32
-    yNEQ: u32
-    yEQ: u32
-    yNOTIN: [u32]
-    yIN: [u32]
-    yNOTLIKE: u32
-    yLIKE: u32
-    pixel_original_color: u32
-    pixel_original_colorGT: u32
-    pixel_original_colorGTE: u32
-    pixel_original_colorLT: u32
-    pixel_original_colorLTE: u32
-    pixel_original_colorNEQ: u32
-    pixel_original_colorEQ: u32
-    pixel_original_colorNOTIN: [u32]
-    pixel_original_colorIN: [u32]
-    pixel_original_colorNOTLIKE: u32
-    pixel_original_colorLIKE: u32
-    pixel_original_text: felt252
-    pixel_original_textGT: felt252
-    pixel_original_textGTE: felt252
-    pixel_original_textLT: felt252
-    pixel_original_textLTE: felt252
-    pixel_original_textNEQ: felt252
-    pixel_original_textEQ: felt252
-    pixel_original_textNOTIN: [felt252]
-    pixel_original_textIN: [felt252]
-    pixel_original_textNOTLIKE: felt252
-    pixel_original_textLIKE: felt252
-    pixel_original_app: ContractAddress
-    pixel_original_appGT: ContractAddress
-    pixel_original_appGTE: ContractAddress
-    pixel_original_appLT: ContractAddress
-    pixel_original_appLTE: ContractAddress
-    pixel_original_appNEQ: ContractAddress
-    pixel_original_appEQ: ContractAddress
-    pixel_original_appNOTIN: [ContractAddress]
-    pixel_original_appIN: [ContractAddress]
-    pixel_original_appNOTLIKE: ContractAddress
-    pixel_original_appLIKE: ContractAddress
-}
-
-input SnakeWhereInput {
-    owner: ContractAddress
-    ownerGT: ContractAddress
-    ownerGTE: ContractAddress
-    ownerLT: ContractAddress
-    ownerLTE: ContractAddress
-    ownerNEQ: ContractAddress
-    ownerEQ: ContractAddress
-    ownerNOTIN: [ContractAddress]
-    ownerIN: [ContractAddress]
-    ownerNOTLIKE: ContractAddress
-    ownerLIKE: ContractAddress
-    length: u8
-    lengthGT: u8
-    lengthGTE: u8
-    lengthLT: u8
-    lengthLTE: u8
-    lengthNEQ: u8
-    lengthEQ: u8
-    lengthNOTIN: [u8]
-    lengthIN: [u8]
-    lengthNOTLIKE: u8
-    lengthLIKE: u8
-    first_segment_id: u32
-    first_segment_idGT: u32
-    first_segment_idGTE: u32
-    first_segment_idLT: u32
-    first_segment_idLTE: u32
-    first_segment_idNEQ: u32
-    first_segment_idEQ: u32
-    first_segment_idNOTIN: [u32]
-    first_segment_idIN: [u32]
-    first_segment_idNOTLIKE: u32
-    first_segment_idLIKE: u32
-    last_segment_id: u32
-    last_segment_idGT: u32
-    last_segment_idGTE: u32
-    last_segment_idLT: u32
-    last_segment_idLTE: u32
-    last_segment_idNEQ: u32
-    last_segment_idEQ: u32
-    last_segment_idNOTIN: [u32]
-    last_segment_idIN: [u32]
-    last_segment_idNOTLIKE: u32
-    last_segment_idLIKE: u32
-    direction: Enum
-    color: u32
-    colorGT: u32
-    colorGTE: u32
-    colorLT: u32
-    colorLTE: u32
-    colorNEQ: u32
-    colorEQ: u32
-    colorNOTIN: [u32]
-    colorIN: [u32]
-    colorNOTLIKE: u32
-    colorLIKE: u32
-    text: felt252
-    textGT: felt252
-    textGTE: felt252
-    textLT: felt252
-    textLTE: felt252
-    textNEQ: felt252
-    textEQ: felt252
-    textNOTIN: [felt252]
-    textIN: [felt252]
-    textNOTLIKE: felt252
-    textLIKE: felt252
-    is_dying: bool
+  ASC
+  DESC
 }
 
 type World__Content {
-    name: String
-    description: String
-    website: String
-    iconUri: String
-    coverUri: String
-    socials: [World__Social]
+  name: String
+  description: String
+  website: String
+  iconUri: String
+  coverUri: String
+  socials: [World__Social]
 }
 
 type World__Entity {
-    id: ID
-    keys: [String]
-    eventId: String
-    executedAt: DateTime
-    createdAt: DateTime
-    updatedAt: DateTime
-    models: [ModelUnion]
+  id: ID
+  keys: [String]
+  eventId: String
+  executedAt: DateTime
+  createdAt: DateTime
+  updatedAt: DateTime
+  models: [ModelUnion]
 }
 
 type World__EntityConnection {
-    edges: [World__EntityEdge]
-    totalCount: Int!
-    pageInfo: World__PageInfo!
+  edges: [World__EntityEdge]
+  totalCount: Int!
+  pageInfo: World__PageInfo!
 }
 
 type World__EntityEdge {
-    node: World__Entity
-    cursor: Cursor
+  node: World__Entity
+  cursor: Cursor
 }
 
 type World__Event {
-    id: ID
-    keys: [String]
-    data: [String]
-    executedAt: DateTime
-    createdAt: DateTime
-    transactionHash: String
+  id: ID
+  keys: [String]
+  data: [String]
+  executedAt: DateTime
+  createdAt: DateTime
+  transactionHash: String
 }
 
 type World__EventConnection {
-    edges: [World__EventEdge]
-    totalCount: Int!
-    pageInfo: World__PageInfo!
+  edges: [World__EventEdge]
+  totalCount: Int!
+  pageInfo: World__PageInfo!
 }
 
 type World__EventEdge {
-    node: World__Event
-    cursor: Cursor
+  node: World__Event
+  cursor: Cursor
 }
 
 type World__EventMessage {
-    id: ID
-    keys: [String]
-    eventId: String
-    executedAt: DateTime
-    createdAt: DateTime
-    updatedAt: DateTime
-    models: [ModelUnion]
+  id: ID
+  keys: [String]
+  eventId: String
+  executedAt: DateTime
+  createdAt: DateTime
+  updatedAt: DateTime
+  models: [ModelUnion]
 }
 
 type World__EventMessageConnection {
-    edges: [World__EventMessageEdge]
-    totalCount: Int!
-    pageInfo: World__PageInfo!
+  edges: [World__EventMessageEdge]
+  totalCount: Int!
+  pageInfo: World__PageInfo!
 }
 
 type World__EventMessageEdge {
-    node: World__EventMessage
-    cursor: Cursor
+  node: World__EventMessage
+  cursor: Cursor
 }
 
 type World__Metadata {
-    id: ID
-    uri: String
-    worldAddress: String!
-    content: World__Content
-    iconImg: String
-    coverImg: String
-    executedAt: DateTime
-    createdAt: DateTime
-    updatedAt: DateTime
+  id: ID
+  uri: String
+  worldAddress: String!
+  content: World__Content
+  iconImg: String
+  coverImg: String
+  executedAt: DateTime
+  createdAt: DateTime
+  updatedAt: DateTime
 }
 
 type World__MetadataConnection {
-    edges: [World__MetadataEdge]
-    totalCount: Int!
-    pageInfo: World__PageInfo!
+  edges: [World__MetadataEdge]
+  totalCount: Int!
+  pageInfo: World__PageInfo!
 }
 
 type World__MetadataEdge {
-    node: World__Metadata
-    cursor: Cursor
+  node: World__Metadata
+  cursor: Cursor
 }
 
 type World__Model {
-    id: ID
-    name: String
-    classHash: felt252
-    contractAddress: felt252
-    transactionHash: felt252
-    executedAt: DateTime
-    createdAt: DateTime
+  id: ID
+  name: String
+  namespace: String
+  classHash: felt252
+  contractAddress: felt252
+  transactionHash: felt252
+  executedAt: DateTime
+  createdAt: DateTime
 }
 
 type World__ModelConnection {
-    edges: [World__ModelEdge]
-    totalCount: Int!
-    pageInfo: World__PageInfo!
+  edges: [World__ModelEdge]
+  totalCount: Int!
+  pageInfo: World__PageInfo!
 }
 
 type World__ModelEdge {
-    node: World__Model
-    cursor: Cursor
+  node: World__Model
+  cursor: Cursor
 }
 
 input World__ModelOrder {
-    direction: OrderDirection!
-    field: World__ModelOrderField!
+  direction: OrderDirection!
+  field: World__ModelOrderField!
 }
 
 enum World__ModelOrderField {
-    NAME
-    CLASS_HASH
+  NAME
+  CLASS_HASH
 }
 
 type World__PageInfo {
-    hasPreviousPage: Boolean
-    hasNextPage: Boolean
-    startCursor: Cursor
-    endCursor: Cursor
+  hasPreviousPage: Boolean
+  hasNextPage: Boolean
+  startCursor: Cursor
+  endCursor: Cursor
 }
 
 type World__Query {
-    entity(id: ID!): World__Entity!
-    entities(
-        first: Int
-        last: Int
-        before: Cursor
-        after: Cursor
-        offset: Int
-        limit: Int
-        keys: [String]
-    ): World__EntityConnection
-    eventMessage(id: ID!): World__EventMessage!
-    eventMessages(
-        first: Int
-        last: Int
-        before: Cursor
-        after: Cursor
-        offset: Int
-        limit: Int
-        keys: [String]
-    ): World__EventMessageConnection
-    events(
-        first: Int
-        last: Int
-        before: Cursor
-        after: Cursor
-        offset: Int
-        limit: Int
-        keys: [String]
-    ): World__EventConnection
-    metadatas(
-        first: Int
-        last: Int
-        before: Cursor
-        after: Cursor
-        offset: Int
-        limit: Int
-    ): World__MetadataConnection
-    model(id: ID!): World__Model!
-    models(
-        first: Int
-        last: Int
-        before: Cursor
-        after: Cursor
-        offset: Int
-        limit: Int
-        order: World__ModelOrder
-    ): World__ModelConnection
-    transaction(transactionHash: ID!): World__Transaction!
-    transactions(
-        first: Int
-        last: Int
-        before: Cursor
-        after: Cursor
-        offset: Int
-        limit: Int
-    ): World__TransactionConnection
-    snakeModels(
-        first: Int
-        last: Int
-        before: Cursor
-        after: Cursor
-        offset: Int
-        limit: Int
-        where: SnakeWhereInput
-        order: SnakeOrder
-    ): SnakeConnection
-    snakeSegmentModels(
-        first: Int
-        last: Int
-        before: Cursor
-        after: Cursor
-        offset: Int
-        limit: Int
-        where: SnakeSegmentWhereInput
-        order: SnakeSegmentOrder
-    ): SnakeSegmentConnection
-    permissionsModels(
-        first: Int
-        last: Int
-        before: Cursor
-        after: Cursor
-        offset: Int
-        limit: Int
-        where: PermissionsWhereInput
-        order: PermissionsOrder
-    ): PermissionsConnection
-    pixelModels(
-        first: Int
-        last: Int
-        before: Cursor
-        after: Cursor
-        offset: Int
-        limit: Int
-        where: PixelWhereInput
-        order: PixelOrder
-    ): PixelConnection
-    queueItemModels(
-        first: Int
-        last: Int
-        before: Cursor
-        after: Cursor
-        offset: Int
-        limit: Int
-        where: QueueItemWhereInput
-        order: QueueItemOrder
-    ): QueueItemConnection
-    appModels(
-        first: Int
-        last: Int
-        before: Cursor
-        after: Cursor
-        offset: Int
-        limit: Int
-        where: AppWhereInput
-        order: AppOrder
-    ): AppConnection
-    appNameModels(
-        first: Int
-        last: Int
-        before: Cursor
-        after: Cursor
-        offset: Int
-        limit: Int
-        where: AppNameWhereInput
-        order: AppNameOrder
-    ): AppNameConnection
-    appUserModels(
-        first: Int
-        last: Int
-        before: Cursor
-        after: Cursor
-        offset: Int
-        limit: Int
-        where: AppUserWhereInput
-        order: AppUserOrder
-    ): AppUserConnection
-    coreActionsAddressModels(
-        first: Int
-        last: Int
-        before: Cursor
-        after: Cursor
-        offset: Int
-        limit: Int
-        where: CoreActionsAddressWhereInput
-        order: CoreActionsAddressOrder
-    ): CoreActionsAddressConnection
-    instructionModels(
-        first: Int
-        last: Int
-        before: Cursor
-        after: Cursor
-        offset: Int
-        limit: Int
-        where: InstructionWhereInput
-        order: InstructionOrder
-    ): InstructionConnection
+  entity(id: ID!): World__Entity!
+  entities(
+    first: Int
+    last: Int
+    before: Cursor
+    after: Cursor
+    offset: Int
+    limit: Int
+    keys: [String]
+  ): World__EntityConnection
+  eventMessage(id: ID!): World__EventMessage!
+  eventMessages(
+    first: Int
+    last: Int
+    before: Cursor
+    after: Cursor
+    offset: Int
+    limit: Int
+    keys: [String]
+  ): World__EventMessageConnection
+  events(
+    first: Int
+    last: Int
+    before: Cursor
+    after: Cursor
+    offset: Int
+    limit: Int
+    keys: [String]
+  ): World__EventConnection
+  metadatas(
+    first: Int
+    last: Int
+    before: Cursor
+    after: Cursor
+    offset: Int
+    limit: Int
+  ): World__MetadataConnection
+  model(id: ID!): World__Model!
+  models(
+    first: Int
+    last: Int
+    before: Cursor
+    after: Cursor
+    offset: Int
+    limit: Int
+    order: World__ModelOrder
+  ): World__ModelConnection
+  transaction(transactionHash: ID!): World__Transaction!
+  transactions(
+    first: Int
+    last: Int
+    before: Cursor
+    after: Cursor
+    offset: Int
+    limit: Int
+  ): World__TransactionConnection
+  ercBalance(accountAddress: String!): [ERC__Balance]
+  ercTransfer(accountAddress: String!, limit: Int!): [ERC__Transfer]
+  pixelawMovedModels(
+    first: Int
+    last: Int
+    before: Cursor
+    after: Cursor
+    offset: Int
+    limit: Int
+    where: pixelaw_MovedWhereInput
+    order: pixelaw_MovedOrder
+  ): pixelaw_MovedConnection
+  pixelawAppNameModels(
+    first: Int
+    last: Int
+    before: Cursor
+    after: Cursor
+    offset: Int
+    limit: Int
+    where: pixelaw_AppNameWhereInput
+    order: pixelaw_AppNameOrder
+  ): pixelaw_AppNameConnection
+  pixelawCoreActionsAddressModels(
+    first: Int
+    last: Int
+    before: Cursor
+    after: Cursor
+    offset: Int
+    limit: Int
+    where: pixelaw_CoreActionsAddressWhereInput
+    order: pixelaw_CoreActionsAddressOrder
+  ): pixelaw_CoreActionsAddressConnection
+  pixelawAppUserModels(
+    first: Int
+    last: Int
+    before: Cursor
+    after: Cursor
+    offset: Int
+    limit: Int
+    where: pixelaw_AppUserWhereInput
+    order: pixelaw_AppUserOrder
+  ): pixelaw_AppUserConnection
+  pixelawSnakeModels(
+    first: Int
+    last: Int
+    before: Cursor
+    after: Cursor
+    offset: Int
+    limit: Int
+    where: pixelaw_SnakeWhereInput
+    order: pixelaw_SnakeOrder
+  ): pixelaw_SnakeConnection
+  pixelawQueueItemModels(
+    first: Int
+    last: Int
+    before: Cursor
+    after: Cursor
+    offset: Int
+    limit: Int
+    where: pixelaw_QueueItemWhereInput
+    order: pixelaw_QueueItemOrder
+  ): pixelaw_QueueItemConnection
+  pixelawDiedModels(
+    first: Int
+    last: Int
+    before: Cursor
+    after: Cursor
+    offset: Int
+    limit: Int
+    where: pixelaw_DiedWhereInput
+    order: pixelaw_DiedOrder
+  ): pixelaw_DiedConnection
+  pixelawRTreeModels(
+    first: Int
+    last: Int
+    before: Cursor
+    after: Cursor
+    offset: Int
+    limit: Int
+    where: pixelaw_RTreeWhereInput
+    order: pixelaw_RTreeOrder
+  ): pixelaw_RTreeConnection
+  pixelawPixelModels(
+    first: Int
+    last: Int
+    before: Cursor
+    after: Cursor
+    offset: Int
+    limit: Int
+    where: pixelaw_PixelWhereInput
+    order: pixelaw_PixelOrder
+  ): pixelaw_PixelConnection
+  pixelawSnakeSegmentModels(
+    first: Int
+    last: Int
+    before: Cursor
+    after: Cursor
+    offset: Int
+    limit: Int
+    where: pixelaw_SnakeSegmentWhereInput
+    order: pixelaw_SnakeSegmentOrder
+  ): pixelaw_SnakeSegmentConnection
+  pixelawAlertModels(
+    first: Int
+    last: Int
+    before: Cursor
+    after: Cursor
+    offset: Int
+    limit: Int
+    where: pixelaw_AlertWhereInput
+    order: pixelaw_AlertOrder
+  ): pixelaw_AlertConnection
+  pixelawAppModels(
+    first: Int
+    last: Int
+    before: Cursor
+    after: Cursor
+    offset: Int
+    limit: Int
+    where: pixelaw_AppWhereInput
+    order: pixelaw_AppOrder
+  ): pixelaw_AppConnection
+  pixelawAreaModels(
+    first: Int
+    last: Int
+    before: Cursor
+    after: Cursor
+    offset: Int
+    limit: Int
+    where: pixelaw_AreaWhereInput
+    order: pixelaw_AreaOrder
+  ): pixelaw_AreaConnection
+  pixelawQueueProcessedModels(
+    first: Int
+    last: Int
+    before: Cursor
+    after: Cursor
+    offset: Int
+    limit: Int
+    where: pixelaw_QueueProcessedWhereInput
+    order: pixelaw_QueueProcessedOrder
+  ): pixelaw_QueueProcessedConnection
+  pixelawQueueScheduledModels(
+    first: Int
+    last: Int
+    before: Cursor
+    after: Cursor
+    offset: Int
+    limit: Int
+    where: pixelaw_QueueScheduledWhereInput
+    order: pixelaw_QueueScheduledOrder
+  ): pixelaw_QueueScheduledConnection
+  pixelawPlayerModels(
+    first: Int
+    last: Int
+    before: Cursor
+    after: Cursor
+    offset: Int
+    limit: Int
+    where: pixelaw_PlayerWhereInput
+    order: pixelaw_PlayerOrder
+  ): pixelaw_PlayerConnection
+  pixelawHighscoreModels(
+    first: Int
+    last: Int
+    before: Cursor
+    after: Cursor
+    offset: Int
+    limit: Int
+    where: pixelaw_HighscoreWhereInput
+    order: pixelaw_HighscoreOrder
+  ): pixelaw_HighscoreConnection
 }
 
 type World__Social {
-    name: String
-    url: String
+  name: String
+  url: String
 }
 
 type World__Subscription {
-    entityUpdated(id: ID): World__Entity!
-    eventMessageUpdated(id: ID): World__EventMessage!
-    eventEmitted(keys: [String]): World__Event!
-    modelRegistered(id: ID): World__Model!
+  entityUpdated(id: ID): World__Entity!
+  eventMessageUpdated(id: ID): World__EventMessage!
+  eventEmitted(keys: [String]): World__Event!
+  modelRegistered(id: ID): World__Model!
 }
 
 type World__Transaction {
-    id: ID
-    transactionHash: felt252
-    senderAddress: felt252
-    calldata: [felt252]
-    maxFee: felt252
-    signature: [felt252]
-    nonce: felt252
-    executedAt: DateTime
-    createdAt: DateTime
+  id: ID
+  transactionHash: felt252
+  senderAddress: felt252
+  calldata: [felt252]
+  maxFee: felt252
+  signature: [felt252]
+  nonce: felt252
+  executedAt: DateTime
+  createdAt: DateTime
 }
 
 type World__TransactionConnection {
-    edges: [World__TransactionEdge]
-    totalCount: Int!
-    pageInfo: World__PageInfo!
+  edges: [World__TransactionEdge]
+  totalCount: Int!
+  pageInfo: World__PageInfo!
 }
 
 type World__TransactionEdge {
-    node: World__Transaction
-    cursor: Cursor
+  node: World__Transaction
+  cursor: Cursor
 }
 
 scalar bool
 
 scalar felt252
+
+type pixelaw_Alert {
+  position: pixelaw_Alert_Position
+  caller: ContractAddress
+  player: ContractAddress
+  message: felt252
+  timestamp: u64
+  entity: World__Entity
+  eventMessage: World__EventMessage
+}
+
+type pixelaw_AlertConnection {
+  edges: [pixelaw_AlertEdge]
+  totalCount: Int!
+  pageInfo: World__PageInfo!
+}
+
+type pixelaw_AlertEdge {
+  node: pixelaw_Alert
+  cursor: Cursor
+}
+
+input pixelaw_AlertOrder {
+  direction: OrderDirection!
+  field: pixelaw_AlertOrderField!
+}
+
+enum pixelaw_AlertOrderField {
+  POSITION
+  CALLER
+  PLAYER
+  MESSAGE
+  TIMESTAMP
+}
+
+input pixelaw_AlertWhereInput {
+  caller: ContractAddress
+  callerGT: ContractAddress
+  callerGTE: ContractAddress
+  callerLT: ContractAddress
+  callerLTE: ContractAddress
+  callerNEQ: ContractAddress
+  callerEQ: ContractAddress
+  callerNOTIN: [ContractAddress]
+  callerIN: [ContractAddress]
+  callerNOTLIKE: ContractAddress
+  callerLIKE: ContractAddress
+  player: ContractAddress
+  playerGT: ContractAddress
+  playerGTE: ContractAddress
+  playerLT: ContractAddress
+  playerLTE: ContractAddress
+  playerNEQ: ContractAddress
+  playerEQ: ContractAddress
+  playerNOTIN: [ContractAddress]
+  playerIN: [ContractAddress]
+  playerNOTLIKE: ContractAddress
+  playerLIKE: ContractAddress
+  message: felt252
+  messageGT: felt252
+  messageGTE: felt252
+  messageLT: felt252
+  messageLTE: felt252
+  messageNEQ: felt252
+  messageEQ: felt252
+  messageNOTIN: [felt252]
+  messageIN: [felt252]
+  messageNOTLIKE: felt252
+  messageLIKE: felt252
+  timestamp: u64
+  timestampGT: u64
+  timestampGTE: u64
+  timestampLT: u64
+  timestampLTE: u64
+  timestampNEQ: u64
+  timestampEQ: u64
+  timestampNOTIN: [u64]
+  timestampIN: [u64]
+  timestampNOTLIKE: u64
+  timestampLIKE: u64
+}
+
+type pixelaw_Alert_Position {
+  x: u16
+  y: u16
+}
+
+type pixelaw_App {
+  system: ContractAddress
+  name: felt252
+  icon: felt252
+  action: felt252
+  entity: World__Entity
+  eventMessage: World__EventMessage
+}
+
+type pixelaw_AppConnection {
+  edges: [pixelaw_AppEdge]
+  totalCount: Int!
+  pageInfo: World__PageInfo!
+}
+
+type pixelaw_AppEdge {
+  node: pixelaw_App
+  cursor: Cursor
+}
+
+type pixelaw_AppName {
+  name: felt252
+  system: ContractAddress
+  entity: World__Entity
+  eventMessage: World__EventMessage
+}
+
+type pixelaw_AppNameConnection {
+  edges: [pixelaw_AppNameEdge]
+  totalCount: Int!
+  pageInfo: World__PageInfo!
+}
+
+type pixelaw_AppNameEdge {
+  node: pixelaw_AppName
+  cursor: Cursor
+}
+
+input pixelaw_AppNameOrder {
+  direction: OrderDirection!
+  field: pixelaw_AppNameOrderField!
+}
+
+enum pixelaw_AppNameOrderField {
+  NAME
+  SYSTEM
+}
+
+input pixelaw_AppNameWhereInput {
+  name: felt252
+  nameGT: felt252
+  nameGTE: felt252
+  nameLT: felt252
+  nameLTE: felt252
+  nameNEQ: felt252
+  nameEQ: felt252
+  nameNOTIN: [felt252]
+  nameIN: [felt252]
+  nameNOTLIKE: felt252
+  nameLIKE: felt252
+  system: ContractAddress
+  systemGT: ContractAddress
+  systemGTE: ContractAddress
+  systemLT: ContractAddress
+  systemLTE: ContractAddress
+  systemNEQ: ContractAddress
+  systemEQ: ContractAddress
+  systemNOTIN: [ContractAddress]
+  systemIN: [ContractAddress]
+  systemNOTLIKE: ContractAddress
+  systemLIKE: ContractAddress
+}
+
+input pixelaw_AppOrder {
+  direction: OrderDirection!
+  field: pixelaw_AppOrderField!
+}
+
+enum pixelaw_AppOrderField {
+  SYSTEM
+  NAME
+  ICON
+  ACTION
+}
+
+type pixelaw_AppUser {
+  system: ContractAddress
+  player: ContractAddress
+  action: felt252
+  entity: World__Entity
+  eventMessage: World__EventMessage
+}
+
+type pixelaw_AppUserConnection {
+  edges: [pixelaw_AppUserEdge]
+  totalCount: Int!
+  pageInfo: World__PageInfo!
+}
+
+type pixelaw_AppUserEdge {
+  node: pixelaw_AppUser
+  cursor: Cursor
+}
+
+input pixelaw_AppUserOrder {
+  direction: OrderDirection!
+  field: pixelaw_AppUserOrderField!
+}
+
+enum pixelaw_AppUserOrderField {
+  SYSTEM
+  PLAYER
+  ACTION
+}
+
+input pixelaw_AppUserWhereInput {
+  system: ContractAddress
+  systemGT: ContractAddress
+  systemGTE: ContractAddress
+  systemLT: ContractAddress
+  systemLTE: ContractAddress
+  systemNEQ: ContractAddress
+  systemEQ: ContractAddress
+  systemNOTIN: [ContractAddress]
+  systemIN: [ContractAddress]
+  systemNOTLIKE: ContractAddress
+  systemLIKE: ContractAddress
+  player: ContractAddress
+  playerGT: ContractAddress
+  playerGTE: ContractAddress
+  playerLT: ContractAddress
+  playerLTE: ContractAddress
+  playerNEQ: ContractAddress
+  playerEQ: ContractAddress
+  playerNOTIN: [ContractAddress]
+  playerIN: [ContractAddress]
+  playerNOTLIKE: ContractAddress
+  playerLIKE: ContractAddress
+  action: felt252
+  actionGT: felt252
+  actionGTE: felt252
+  actionLT: felt252
+  actionLTE: felt252
+  actionNEQ: felt252
+  actionEQ: felt252
+  actionNOTIN: [felt252]
+  actionIN: [felt252]
+  actionNOTLIKE: felt252
+  actionLIKE: felt252
+}
+
+input pixelaw_AppWhereInput {
+  system: ContractAddress
+  systemGT: ContractAddress
+  systemGTE: ContractAddress
+  systemLT: ContractAddress
+  systemLTE: ContractAddress
+  systemNEQ: ContractAddress
+  systemEQ: ContractAddress
+  systemNOTIN: [ContractAddress]
+  systemIN: [ContractAddress]
+  systemNOTLIKE: ContractAddress
+  systemLIKE: ContractAddress
+  name: felt252
+  nameGT: felt252
+  nameGTE: felt252
+  nameLT: felt252
+  nameLTE: felt252
+  nameNEQ: felt252
+  nameEQ: felt252
+  nameNOTIN: [felt252]
+  nameIN: [felt252]
+  nameNOTLIKE: felt252
+  nameLIKE: felt252
+  icon: felt252
+  iconGT: felt252
+  iconGTE: felt252
+  iconLT: felt252
+  iconLTE: felt252
+  iconNEQ: felt252
+  iconEQ: felt252
+  iconNOTIN: [felt252]
+  iconIN: [felt252]
+  iconNOTLIKE: felt252
+  iconLIKE: felt252
+  action: felt252
+  actionGT: felt252
+  actionGTE: felt252
+  actionLT: felt252
+  actionLTE: felt252
+  actionNEQ: felt252
+  actionEQ: felt252
+  actionNOTIN: [felt252]
+  actionIN: [felt252]
+  actionNOTLIKE: felt252
+  actionLIKE: felt252
+}
+
+type pixelaw_Area {
+  id: u64
+  app: ContractAddress
+  owner: ContractAddress
+  color: u32
+  entity: World__Entity
+  eventMessage: World__EventMessage
+}
+
+type pixelaw_AreaConnection {
+  edges: [pixelaw_AreaEdge]
+  totalCount: Int!
+  pageInfo: World__PageInfo!
+}
+
+type pixelaw_AreaEdge {
+  node: pixelaw_Area
+  cursor: Cursor
+}
+
+input pixelaw_AreaOrder {
+  direction: OrderDirection!
+  field: pixelaw_AreaOrderField!
+}
+
+enum pixelaw_AreaOrderField {
+  ID
+  APP
+  OWNER
+  COLOR
+}
+
+input pixelaw_AreaWhereInput {
+  id: u64
+  idGT: u64
+  idGTE: u64
+  idLT: u64
+  idLTE: u64
+  idNEQ: u64
+  idEQ: u64
+  idNOTIN: [u64]
+  idIN: [u64]
+  idNOTLIKE: u64
+  idLIKE: u64
+  app: ContractAddress
+  appGT: ContractAddress
+  appGTE: ContractAddress
+  appLT: ContractAddress
+  appLTE: ContractAddress
+  appNEQ: ContractAddress
+  appEQ: ContractAddress
+  appNOTIN: [ContractAddress]
+  appIN: [ContractAddress]
+  appNOTLIKE: ContractAddress
+  appLIKE: ContractAddress
+  owner: ContractAddress
+  ownerGT: ContractAddress
+  ownerGTE: ContractAddress
+  ownerLT: ContractAddress
+  ownerLTE: ContractAddress
+  ownerNEQ: ContractAddress
+  ownerEQ: ContractAddress
+  ownerNOTIN: [ContractAddress]
+  ownerIN: [ContractAddress]
+  ownerNOTLIKE: ContractAddress
+  ownerLIKE: ContractAddress
+  color: u32
+  colorGT: u32
+  colorGTE: u32
+  colorLT: u32
+  colorLTE: u32
+  colorNEQ: u32
+  colorEQ: u32
+  colorNOTIN: [u32]
+  colorIN: [u32]
+  colorNOTLIKE: u32
+  colorLIKE: u32
+}
+
+type pixelaw_CoreActionsAddress {
+  key: felt252
+  value: ContractAddress
+  entity: World__Entity
+  eventMessage: World__EventMessage
+}
+
+type pixelaw_CoreActionsAddressConnection {
+  edges: [pixelaw_CoreActionsAddressEdge]
+  totalCount: Int!
+  pageInfo: World__PageInfo!
+}
+
+type pixelaw_CoreActionsAddressEdge {
+  node: pixelaw_CoreActionsAddress
+  cursor: Cursor
+}
+
+input pixelaw_CoreActionsAddressOrder {
+  direction: OrderDirection!
+  field: pixelaw_CoreActionsAddressOrderField!
+}
+
+enum pixelaw_CoreActionsAddressOrderField {
+  KEY
+  VALUE
+}
+
+input pixelaw_CoreActionsAddressWhereInput {
+  key: felt252
+  keyGT: felt252
+  keyGTE: felt252
+  keyLT: felt252
+  keyLTE: felt252
+  keyNEQ: felt252
+  keyEQ: felt252
+  keyNOTIN: [felt252]
+  keyIN: [felt252]
+  keyNOTLIKE: felt252
+  keyLIKE: felt252
+  value: ContractAddress
+  valueGT: ContractAddress
+  valueGTE: ContractAddress
+  valueLT: ContractAddress
+  valueLTE: ContractAddress
+  valueNEQ: ContractAddress
+  valueEQ: ContractAddress
+  valueNOTIN: [ContractAddress]
+  valueIN: [ContractAddress]
+  valueNOTLIKE: ContractAddress
+  valueLIKE: ContractAddress
+}
+
+type pixelaw_Died {
+  owner: ContractAddress
+  x: u16
+  y: u16
+  entity: World__Entity
+  eventMessage: World__EventMessage
+}
+
+type pixelaw_DiedConnection {
+  edges: [pixelaw_DiedEdge]
+  totalCount: Int!
+  pageInfo: World__PageInfo!
+}
+
+type pixelaw_DiedEdge {
+  node: pixelaw_Died
+  cursor: Cursor
+}
+
+input pixelaw_DiedOrder {
+  direction: OrderDirection!
+  field: pixelaw_DiedOrderField!
+}
+
+enum pixelaw_DiedOrderField {
+  OWNER
+  X
+  Y
+}
+
+input pixelaw_DiedWhereInput {
+  owner: ContractAddress
+  ownerGT: ContractAddress
+  ownerGTE: ContractAddress
+  ownerLT: ContractAddress
+  ownerLTE: ContractAddress
+  ownerNEQ: ContractAddress
+  ownerEQ: ContractAddress
+  ownerNOTIN: [ContractAddress]
+  ownerIN: [ContractAddress]
+  ownerNOTLIKE: ContractAddress
+  ownerLIKE: ContractAddress
+  x: u16
+  xGT: u16
+  xGTE: u16
+  xLT: u16
+  xLTE: u16
+  xNEQ: u16
+  xEQ: u16
+  xNOTIN: [u16]
+  xIN: [u16]
+  xNOTLIKE: u16
+  xLIKE: u16
+  y: u16
+  yGT: u16
+  yGTE: u16
+  yLT: u16
+  yLTE: u16
+  yNEQ: u16
+  yEQ: u16
+  yNOTIN: [u16]
+  yIN: [u16]
+  yNOTLIKE: u16
+  yLIKE: u16
+}
+
+type pixelaw_Highscore {
+  player_id: u64
+  score: u64
+  entity: World__Entity
+  eventMessage: World__EventMessage
+}
+
+type pixelaw_HighscoreConnection {
+  edges: [pixelaw_HighscoreEdge]
+  totalCount: Int!
+  pageInfo: World__PageInfo!
+}
+
+type pixelaw_HighscoreEdge {
+  node: pixelaw_Highscore
+  cursor: Cursor
+}
+
+input pixelaw_HighscoreOrder {
+  direction: OrderDirection!
+  field: pixelaw_HighscoreOrderField!
+}
+
+enum pixelaw_HighscoreOrderField {
+  PLAYER_ID
+  SCORE
+}
+
+input pixelaw_HighscoreWhereInput {
+  player_id: u64
+  player_idGT: u64
+  player_idGTE: u64
+  player_idLT: u64
+  player_idLTE: u64
+  player_idNEQ: u64
+  player_idEQ: u64
+  player_idNOTIN: [u64]
+  player_idIN: [u64]
+  player_idNOTLIKE: u64
+  player_idLIKE: u64
+  score: u64
+  scoreGT: u64
+  scoreGTE: u64
+  scoreLT: u64
+  scoreLTE: u64
+  scoreNEQ: u64
+  scoreEQ: u64
+  scoreNOTIN: [u64]
+  scoreIN: [u64]
+  scoreNOTLIKE: u64
+  scoreLIKE: u64
+}
+
+type pixelaw_Moved {
+  owner: ContractAddress
+  direction: Enum
+  entity: World__Entity
+  eventMessage: World__EventMessage
+}
+
+type pixelaw_MovedConnection {
+  edges: [pixelaw_MovedEdge]
+  totalCount: Int!
+  pageInfo: World__PageInfo!
+}
+
+type pixelaw_MovedEdge {
+  node: pixelaw_Moved
+  cursor: Cursor
+}
+
+input pixelaw_MovedOrder {
+  direction: OrderDirection!
+  field: pixelaw_MovedOrderField!
+}
+
+enum pixelaw_MovedOrderField {
+  OWNER
+  DIRECTION
+}
+
+input pixelaw_MovedWhereInput {
+  owner: ContractAddress
+  ownerGT: ContractAddress
+  ownerGTE: ContractAddress
+  ownerLT: ContractAddress
+  ownerLTE: ContractAddress
+  ownerNEQ: ContractAddress
+  ownerEQ: ContractAddress
+  ownerNOTIN: [ContractAddress]
+  ownerIN: [ContractAddress]
+  ownerNOTLIKE: ContractAddress
+  ownerLIKE: ContractAddress
+  direction: Enum
+}
+
+type pixelaw_Pixel {
+  x: u16
+  y: u16
+  app: ContractAddress
+  color: u32
+  created_at: u64
+  updated_at: u64
+  timestamp: u64
+  owner: ContractAddress
+  text: felt252
+  action: felt252
+  entity: World__Entity
+  eventMessage: World__EventMessage
+}
+
+type pixelaw_PixelConnection {
+  edges: [pixelaw_PixelEdge]
+  totalCount: Int!
+  pageInfo: World__PageInfo!
+}
+
+type pixelaw_PixelEdge {
+  node: pixelaw_Pixel
+  cursor: Cursor
+}
+
+input pixelaw_PixelOrder {
+  direction: OrderDirection!
+  field: pixelaw_PixelOrderField!
+}
+
+enum pixelaw_PixelOrderField {
+  X
+  Y
+  APP
+  COLOR
+  CREATED_AT
+  UPDATED_AT
+  TIMESTAMP
+  OWNER
+  TEXT
+  ACTION
+}
+
+input pixelaw_PixelWhereInput {
+  x: u16
+  xGT: u16
+  xGTE: u16
+  xLT: u16
+  xLTE: u16
+  xNEQ: u16
+  xEQ: u16
+  xNOTIN: [u16]
+  xIN: [u16]
+  xNOTLIKE: u16
+  xLIKE: u16
+  y: u16
+  yGT: u16
+  yGTE: u16
+  yLT: u16
+  yLTE: u16
+  yNEQ: u16
+  yEQ: u16
+  yNOTIN: [u16]
+  yIN: [u16]
+  yNOTLIKE: u16
+  yLIKE: u16
+  app: ContractAddress
+  appGT: ContractAddress
+  appGTE: ContractAddress
+  appLT: ContractAddress
+  appLTE: ContractAddress
+  appNEQ: ContractAddress
+  appEQ: ContractAddress
+  appNOTIN: [ContractAddress]
+  appIN: [ContractAddress]
+  appNOTLIKE: ContractAddress
+  appLIKE: ContractAddress
+  color: u32
+  colorGT: u32
+  colorGTE: u32
+  colorLT: u32
+  colorLTE: u32
+  colorNEQ: u32
+  colorEQ: u32
+  colorNOTIN: [u32]
+  colorIN: [u32]
+  colorNOTLIKE: u32
+  colorLIKE: u32
+  created_at: u64
+  created_atGT: u64
+  created_atGTE: u64
+  created_atLT: u64
+  created_atLTE: u64
+  created_atNEQ: u64
+  created_atEQ: u64
+  created_atNOTIN: [u64]
+  created_atIN: [u64]
+  created_atNOTLIKE: u64
+  created_atLIKE: u64
+  updated_at: u64
+  updated_atGT: u64
+  updated_atGTE: u64
+  updated_atLT: u64
+  updated_atLTE: u64
+  updated_atNEQ: u64
+  updated_atEQ: u64
+  updated_atNOTIN: [u64]
+  updated_atIN: [u64]
+  updated_atNOTLIKE: u64
+  updated_atLIKE: u64
+  timestamp: u64
+  timestampGT: u64
+  timestampGTE: u64
+  timestampLT: u64
+  timestampLTE: u64
+  timestampNEQ: u64
+  timestampEQ: u64
+  timestampNOTIN: [u64]
+  timestampIN: [u64]
+  timestampNOTLIKE: u64
+  timestampLIKE: u64
+  owner: ContractAddress
+  ownerGT: ContractAddress
+  ownerGTE: ContractAddress
+  ownerLT: ContractAddress
+  ownerLTE: ContractAddress
+  ownerNEQ: ContractAddress
+  ownerEQ: ContractAddress
+  ownerNOTIN: [ContractAddress]
+  ownerIN: [ContractAddress]
+  ownerNOTLIKE: ContractAddress
+  ownerLIKE: ContractAddress
+  text: felt252
+  textGT: felt252
+  textGTE: felt252
+  textLT: felt252
+  textLTE: felt252
+  textNEQ: felt252
+  textEQ: felt252
+  textNOTIN: [felt252]
+  textIN: [felt252]
+  textNOTLIKE: felt252
+  textLIKE: felt252
+  action: felt252
+  actionGT: felt252
+  actionGTE: felt252
+  actionLT: felt252
+  actionLTE: felt252
+  actionNEQ: felt252
+  actionEQ: felt252
+  actionNOTIN: [felt252]
+  actionIN: [felt252]
+  actionNOTLIKE: felt252
+  actionLIKE: felt252
+}
+
+type pixelaw_Player {
+  id: u64
+  score: u64
+  entity: World__Entity
+  eventMessage: World__EventMessage
+}
+
+type pixelaw_PlayerConnection {
+  edges: [pixelaw_PlayerEdge]
+  totalCount: Int!
+  pageInfo: World__PageInfo!
+}
+
+type pixelaw_PlayerEdge {
+  node: pixelaw_Player
+  cursor: Cursor
+}
+
+input pixelaw_PlayerOrder {
+  direction: OrderDirection!
+  field: pixelaw_PlayerOrderField!
+}
+
+enum pixelaw_PlayerOrderField {
+  ID
+  SCORE
+}
+
+input pixelaw_PlayerWhereInput {
+  id: u64
+  idGT: u64
+  idGTE: u64
+  idLT: u64
+  idLTE: u64
+  idNEQ: u64
+  idEQ: u64
+  idNOTIN: [u64]
+  idIN: [u64]
+  idNOTLIKE: u64
+  idLIKE: u64
+  score: u64
+  scoreGT: u64
+  scoreGTE: u64
+  scoreLT: u64
+  scoreLTE: u64
+  scoreNEQ: u64
+  scoreEQ: u64
+  scoreNOTIN: [u64]
+  scoreIN: [u64]
+  scoreNOTLIKE: u64
+  scoreLIKE: u64
+}
+
+type pixelaw_QueueItem {
+  id: felt252
+  valid: bool
+  entity: World__Entity
+  eventMessage: World__EventMessage
+}
+
+type pixelaw_QueueItemConnection {
+  edges: [pixelaw_QueueItemEdge]
+  totalCount: Int!
+  pageInfo: World__PageInfo!
+}
+
+type pixelaw_QueueItemEdge {
+  node: pixelaw_QueueItem
+  cursor: Cursor
+}
+
+input pixelaw_QueueItemOrder {
+  direction: OrderDirection!
+  field: pixelaw_QueueItemOrderField!
+}
+
+enum pixelaw_QueueItemOrderField {
+  ID
+  VALID
+}
+
+input pixelaw_QueueItemWhereInput {
+  id: felt252
+  idGT: felt252
+  idGTE: felt252
+  idLT: felt252
+  idLTE: felt252
+  idNEQ: felt252
+  idEQ: felt252
+  idNOTIN: [felt252]
+  idIN: [felt252]
+  idNOTLIKE: felt252
+  idLIKE: felt252
+  valid: bool
+}
+
+type pixelaw_QueueProcessed {
+  id: felt252
+  result: felt252
+  entity: World__Entity
+  eventMessage: World__EventMessage
+}
+
+type pixelaw_QueueProcessedConnection {
+  edges: [pixelaw_QueueProcessedEdge]
+  totalCount: Int!
+  pageInfo: World__PageInfo!
+}
+
+type pixelaw_QueueProcessedEdge {
+  node: pixelaw_QueueProcessed
+  cursor: Cursor
+}
+
+input pixelaw_QueueProcessedOrder {
+  direction: OrderDirection!
+  field: pixelaw_QueueProcessedOrderField!
+}
+
+enum pixelaw_QueueProcessedOrderField {
+  ID
+  RESULT
+}
+
+input pixelaw_QueueProcessedWhereInput {
+  id: felt252
+  idGT: felt252
+  idGTE: felt252
+  idLT: felt252
+  idLTE: felt252
+  idNEQ: felt252
+  idEQ: felt252
+  idNOTIN: [felt252]
+  idIN: [felt252]
+  idNOTLIKE: felt252
+  idLIKE: felt252
+  result: felt252
+  resultGT: felt252
+  resultGTE: felt252
+  resultLT: felt252
+  resultLTE: felt252
+  resultNEQ: felt252
+  resultEQ: felt252
+  resultNOTIN: [felt252]
+  resultIN: [felt252]
+  resultNOTLIKE: felt252
+  resultLIKE: felt252
+}
+
+type pixelaw_QueueScheduled {
+  id: felt252
+  timestamp: u64
+  called_system: ContractAddress
+  selector: felt252
+  calldata: [felt252]
+  entity: World__Entity
+  eventMessage: World__EventMessage
+}
+
+type pixelaw_QueueScheduledConnection {
+  edges: [pixelaw_QueueScheduledEdge]
+  totalCount: Int!
+  pageInfo: World__PageInfo!
+}
+
+type pixelaw_QueueScheduledEdge {
+  node: pixelaw_QueueScheduled
+  cursor: Cursor
+}
+
+input pixelaw_QueueScheduledOrder {
+  direction: OrderDirection!
+  field: pixelaw_QueueScheduledOrderField!
+}
+
+enum pixelaw_QueueScheduledOrderField {
+  ID
+  TIMESTAMP
+  CALLED_SYSTEM
+  SELECTOR
+  CALLDATA
+}
+
+input pixelaw_QueueScheduledWhereInput {
+  id: felt252
+  idGT: felt252
+  idGTE: felt252
+  idLT: felt252
+  idLTE: felt252
+  idNEQ: felt252
+  idEQ: felt252
+  idNOTIN: [felt252]
+  idIN: [felt252]
+  idNOTLIKE: felt252
+  idLIKE: felt252
+  timestamp: u64
+  timestampGT: u64
+  timestampGTE: u64
+  timestampLT: u64
+  timestampLTE: u64
+  timestampNEQ: u64
+  timestampEQ: u64
+  timestampNOTIN: [u64]
+  timestampIN: [u64]
+  timestampNOTLIKE: u64
+  timestampLIKE: u64
+  called_system: ContractAddress
+  called_systemGT: ContractAddress
+  called_systemGTE: ContractAddress
+  called_systemLT: ContractAddress
+  called_systemLTE: ContractAddress
+  called_systemNEQ: ContractAddress
+  called_systemEQ: ContractAddress
+  called_systemNOTIN: [ContractAddress]
+  called_systemIN: [ContractAddress]
+  called_systemNOTLIKE: ContractAddress
+  called_systemLIKE: ContractAddress
+  selector: felt252
+  selectorGT: felt252
+  selectorGTE: felt252
+  selectorLT: felt252
+  selectorLTE: felt252
+  selectorNEQ: felt252
+  selectorEQ: felt252
+  selectorNOTIN: [felt252]
+  selectorIN: [felt252]
+  selectorNOTLIKE: felt252
+  selectorLIKE: felt252
+}
+
+type pixelaw_RTree {
+  id: u64
+  children: felt252
+  entity: World__Entity
+  eventMessage: World__EventMessage
+}
+
+type pixelaw_RTreeConnection {
+  edges: [pixelaw_RTreeEdge]
+  totalCount: Int!
+  pageInfo: World__PageInfo!
+}
+
+type pixelaw_RTreeEdge {
+  node: pixelaw_RTree
+  cursor: Cursor
+}
+
+input pixelaw_RTreeOrder {
+  direction: OrderDirection!
+  field: pixelaw_RTreeOrderField!
+}
+
+enum pixelaw_RTreeOrderField {
+  ID
+  CHILDREN
+}
+
+input pixelaw_RTreeWhereInput {
+  id: u64
+  idGT: u64
+  idGTE: u64
+  idLT: u64
+  idLTE: u64
+  idNEQ: u64
+  idEQ: u64
+  idNOTIN: [u64]
+  idIN: [u64]
+  idNOTLIKE: u64
+  idLIKE: u64
+  children: felt252
+  childrenGT: felt252
+  childrenGTE: felt252
+  childrenLT: felt252
+  childrenLTE: felt252
+  childrenNEQ: felt252
+  childrenEQ: felt252
+  childrenNOTIN: [felt252]
+  childrenIN: [felt252]
+  childrenNOTLIKE: felt252
+  childrenLIKE: felt252
+}
+
+type pixelaw_Snake {
+  owner: ContractAddress
+  length: u8
+  first_segment_id: u32
+  last_segment_id: u32
+  direction: Enum
+  color: u32
+  text: felt252
+  is_dying: bool
+  entity: World__Entity
+  eventMessage: World__EventMessage
+}
+
+type pixelaw_SnakeConnection {
+  edges: [pixelaw_SnakeEdge]
+  totalCount: Int!
+  pageInfo: World__PageInfo!
+}
+
+type pixelaw_SnakeEdge {
+  node: pixelaw_Snake
+  cursor: Cursor
+}
+
+input pixelaw_SnakeOrder {
+  direction: OrderDirection!
+  field: pixelaw_SnakeOrderField!
+}
+
+enum pixelaw_SnakeOrderField {
+  OWNER
+  LENGTH
+  FIRST_SEGMENT_ID
+  LAST_SEGMENT_ID
+  DIRECTION
+  COLOR
+  TEXT
+  IS_DYING
+}
+
+type pixelaw_SnakeSegment {
+  id: u32
+  previous_id: u32
+  next_id: u32
+  x: u16
+  y: u16
+  pixel_original_color: u32
+  pixel_original_text: felt252
+  pixel_original_app: ContractAddress
+  entity: World__Entity
+  eventMessage: World__EventMessage
+}
+
+type pixelaw_SnakeSegmentConnection {
+  edges: [pixelaw_SnakeSegmentEdge]
+  totalCount: Int!
+  pageInfo: World__PageInfo!
+}
+
+type pixelaw_SnakeSegmentEdge {
+  node: pixelaw_SnakeSegment
+  cursor: Cursor
+}
+
+input pixelaw_SnakeSegmentOrder {
+  direction: OrderDirection!
+  field: pixelaw_SnakeSegmentOrderField!
+}
+
+enum pixelaw_SnakeSegmentOrderField {
+  ID
+  PREVIOUS_ID
+  NEXT_ID
+  X
+  Y
+  PIXEL_ORIGINAL_COLOR
+  PIXEL_ORIGINAL_TEXT
+  PIXEL_ORIGINAL_APP
+}
+
+input pixelaw_SnakeSegmentWhereInput {
+  id: u32
+  idGT: u32
+  idGTE: u32
+  idLT: u32
+  idLTE: u32
+  idNEQ: u32
+  idEQ: u32
+  idNOTIN: [u32]
+  idIN: [u32]
+  idNOTLIKE: u32
+  idLIKE: u32
+  previous_id: u32
+  previous_idGT: u32
+  previous_idGTE: u32
+  previous_idLT: u32
+  previous_idLTE: u32
+  previous_idNEQ: u32
+  previous_idEQ: u32
+  previous_idNOTIN: [u32]
+  previous_idIN: [u32]
+  previous_idNOTLIKE: u32
+  previous_idLIKE: u32
+  next_id: u32
+  next_idGT: u32
+  next_idGTE: u32
+  next_idLT: u32
+  next_idLTE: u32
+  next_idNEQ: u32
+  next_idEQ: u32
+  next_idNOTIN: [u32]
+  next_idIN: [u32]
+  next_idNOTLIKE: u32
+  next_idLIKE: u32
+  x: u16
+  xGT: u16
+  xGTE: u16
+  xLT: u16
+  xLTE: u16
+  xNEQ: u16
+  xEQ: u16
+  xNOTIN: [u16]
+  xIN: [u16]
+  xNOTLIKE: u16
+  xLIKE: u16
+  y: u16
+  yGT: u16
+  yGTE: u16
+  yLT: u16
+  yLTE: u16
+  yNEQ: u16
+  yEQ: u16
+  yNOTIN: [u16]
+  yIN: [u16]
+  yNOTLIKE: u16
+  yLIKE: u16
+  pixel_original_color: u32
+  pixel_original_colorGT: u32
+  pixel_original_colorGTE: u32
+  pixel_original_colorLT: u32
+  pixel_original_colorLTE: u32
+  pixel_original_colorNEQ: u32
+  pixel_original_colorEQ: u32
+  pixel_original_colorNOTIN: [u32]
+  pixel_original_colorIN: [u32]
+  pixel_original_colorNOTLIKE: u32
+  pixel_original_colorLIKE: u32
+  pixel_original_text: felt252
+  pixel_original_textGT: felt252
+  pixel_original_textGTE: felt252
+  pixel_original_textLT: felt252
+  pixel_original_textLTE: felt252
+  pixel_original_textNEQ: felt252
+  pixel_original_textEQ: felt252
+  pixel_original_textNOTIN: [felt252]
+  pixel_original_textIN: [felt252]
+  pixel_original_textNOTLIKE: felt252
+  pixel_original_textLIKE: felt252
+  pixel_original_app: ContractAddress
+  pixel_original_appGT: ContractAddress
+  pixel_original_appGTE: ContractAddress
+  pixel_original_appLT: ContractAddress
+  pixel_original_appLTE: ContractAddress
+  pixel_original_appNEQ: ContractAddress
+  pixel_original_appEQ: ContractAddress
+  pixel_original_appNOTIN: [ContractAddress]
+  pixel_original_appIN: [ContractAddress]
+  pixel_original_appNOTLIKE: ContractAddress
+  pixel_original_appLIKE: ContractAddress
+}
+
+input pixelaw_SnakeWhereInput {
+  owner: ContractAddress
+  ownerGT: ContractAddress
+  ownerGTE: ContractAddress
+  ownerLT: ContractAddress
+  ownerLTE: ContractAddress
+  ownerNEQ: ContractAddress
+  ownerEQ: ContractAddress
+  ownerNOTIN: [ContractAddress]
+  ownerIN: [ContractAddress]
+  ownerNOTLIKE: ContractAddress
+  ownerLIKE: ContractAddress
+  length: u8
+  lengthGT: u8
+  lengthGTE: u8
+  lengthLT: u8
+  lengthLTE: u8
+  lengthNEQ: u8
+  lengthEQ: u8
+  lengthNOTIN: [u8]
+  lengthIN: [u8]
+  lengthNOTLIKE: u8
+  lengthLIKE: u8
+  first_segment_id: u32
+  first_segment_idGT: u32
+  first_segment_idGTE: u32
+  first_segment_idLT: u32
+  first_segment_idLTE: u32
+  first_segment_idNEQ: u32
+  first_segment_idEQ: u32
+  first_segment_idNOTIN: [u32]
+  first_segment_idIN: [u32]
+  first_segment_idNOTLIKE: u32
+  first_segment_idLIKE: u32
+  last_segment_id: u32
+  last_segment_idGT: u32
+  last_segment_idGTE: u32
+  last_segment_idLT: u32
+  last_segment_idLTE: u32
+  last_segment_idNEQ: u32
+  last_segment_idEQ: u32
+  last_segment_idNOTIN: [u32]
+  last_segment_idIN: [u32]
+  last_segment_idNOTLIKE: u32
+  last_segment_idLIKE: u32
+  direction: Enum
+  color: u32
+  colorGT: u32
+  colorGTE: u32
+  colorLT: u32
+  colorLTE: u32
+  colorNEQ: u32
+  colorEQ: u32
+  colorNOTIN: [u32]
+  colorIN: [u32]
+  colorNOTLIKE: u32
+  colorLIKE: u32
+  text: felt252
+  textGT: felt252
+  textGTE: felt252
+  textLT: felt252
+  textLTE: felt252
+  textNEQ: felt252
+  textEQ: felt252
+  textNOTIN: [felt252]
+  textIN: [felt252]
+  textNOTLIKE: felt252
+  textLIKE: felt252
+  is_dying: bool
+}
+
+scalar u16
 
 scalar u32
 

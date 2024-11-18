@@ -4,7 +4,7 @@ import { PNG } from "pngjs"
 import path from "path"
 import { Contract, RpcProvider } from "starknet"
 import type { Message } from "../types"
-import { getAddresses } from "../utils/getAddresses"
+import {getAddresses, getCoreActionsAddresses} from "../utils/getAddresses"
 import { sleep } from "../utils/sleep"
 import { SqliteDb } from "./db"
 
@@ -130,10 +130,10 @@ class TileCacher {
         }
     }
 
-    static async create(nodeUrl: string, toriiUrl: string, storageDir: string, tilesDir: string): Promise<TileCacher> {
+    static async create(nodeUrl: string, toriiUrl: string, worldAddress: string, storageDir: string, tilesDir: string): Promise<TileCacher> {
         const handler = new TileCacher(nodeUrl, toriiUrl, storageDir, tilesDir)
 
-        const { worldAddress, coreAddress } = await getAddresses(toriiUrl)
+        const { coreAddress } = await getCoreActionsAddresses(toriiUrl)
         handler.worldAddress = worldAddress
         handler.coreAddress = coreAddress
 
@@ -201,8 +201,9 @@ process.on("message", async (message: Message) => {
             const toriiUrl = process.env["TORII_URL"] ?? "http://127.0.0.1:8080"
             const storageDir = process.env["STORAGE_DIR"] ?? "./storage"
             const tilesDir = process.env["TILES_DIR"] ?? `${storageDir}/tiles`
+            const worldAdress = process.env["WORLD_ADDRESS"] ?? `0x0`
 
-            handler = await TileCacher.create(nodeUrl, toriiUrl, storageDir, tilesDir)
+            handler = await TileCacher.create(nodeUrl, toriiUrl, worldAdress, storageDir, tilesDir)
             await loop(handler)
         } catch (err) {
             console.error("Failed to start QueueBot", err)
