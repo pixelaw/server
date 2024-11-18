@@ -1,4 +1,4 @@
-import {Bounds, Coordinate, MAX_UINT32} from "../types";
+import {Bounds, Coordinate, MAX_UINT32, MAX_DIMENSION} from "../types";
 
 
 const MAX_BOX = 100000
@@ -9,13 +9,13 @@ export function isTileWithinBoundingBox(coordinate: Coordinate, boundingBox: Bou
 
     if(left > right){
         // wrapping X
-        right += MAX_UINT32
-        if(x < MAX_BOX) x += MAX_UINT32
+        right += MAX_DIMENSION
+        if(x < MAX_BOX) x += MAX_DIMENSION
     }
     if(top > bottom){
         // wrapping X
-        bottom += MAX_UINT32
-        if(y < MAX_BOX) y += MAX_UINT32
+        bottom += MAX_DIMENSION
+        if(y < MAX_BOX) y += MAX_DIMENSION
     }
 
     return (

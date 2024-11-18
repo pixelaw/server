@@ -6,7 +6,7 @@ import {
     RpcProvider,
     events, BigNumberish} from 'starknet';
 import {SqliteDb} from "./db";
-import {getAddresses} from "../utils/getAddresses";
+import {getAddresses, getCoreActionsAddresses} from "../utils/getAddresses";
 import { sleep } from '../utils/sleep';
 import {Message} from "../types";
 
@@ -175,13 +175,14 @@ class QueueHandler {
     static async create(
         nodeUrl: string,
         toriiUrl: string,
+        worldAddress: string,
         address: string,
         private_key: string,
         storageDir: string,
     ): Promise<QueueHandler> {
         const handler = new QueueHandler(nodeUrl, toriiUrl, address, private_key, storageDir);
 
-        const {worldAddress, coreAddress} = await getAddresses(toriiUrl)
+        const {coreAddress} = await getCoreActionsAddresses(toriiUrl)
         handler.worldAddress = worldAddress
         handler.coreAddress = coreAddress
 
@@ -223,6 +224,7 @@ process.on('message', async (message: Message) => {
             handler = await QueueHandler.create(
                 process.env["RPC_URL"] ?? "http://127.0.0.1:5050",
                 process.env["TORII_URL"] ?? "http://127.0.0.1:8080",
+                process.env["WORLD_ADDRESS"] ?? "0x0",
                 process.env["ACCOUNT_ADDRESS"] ?? "0x003c4dd268780ef738920c801edc3a75b6337bc17558c74795b530c0ff502486",
                 process.env["ACCOUNT_PK"] ?? "0x2bbf4f9fd0bbb2e60b0316c1fe0b76cf7a4d0198bd493ced9b8df2a3a24d68a",
                 process.env["STORAGE_DIR"] ?? './storage',
@@ -241,6 +243,7 @@ async function main() {
     handler = await QueueHandler.create(
         process.env["RPC_URL"] ?? "http://127.0.0.1:5050",
         process.env["TORII_URL"] ?? "http://127.0.0.1:8080",
+        process.env["WORLD_ADDRESS"] ?? "0x0",
         process.env["ACCOUNT_ADDRESS"] ?? "0x003c4dd268780ef738920c801edc3a75b6337bc17558c74795b530c0ff502486",
         process.env["ACCOUNT_PK"] ?? "0x2bbf4f9fd0bbb2e60b0316c1fe0b76cf7a4d0198bd493ced9b8df2a3a24d68a",
         process.env["STORAGE_DIR"] ?? './storage',

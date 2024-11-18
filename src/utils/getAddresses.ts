@@ -39,6 +39,24 @@ type ResultType = {
         }
     }
 }
+export const getCoreActionsAddresses = async (toriiUrl: string) => {
+    const client = createClient(`${toriiUrl}/graphql`)
+    const {
+        data: {
+            pixelawCoreActionsAddressModels: {
+                edges: [
+                    {
+                        node: { key, value: coreAddress },
+                    },
+                ],
+            },
+        },
+    }: ResultType = await client.query({
+        query: QUERY_ADDRESSES,
+    })
+    if (!coreAddress) throw new Error("coreAddress has not been initialized")
+    return { coreAddress }
+}
 
 export const getAddresses = async (toriiUrl: string) => {
     const client = createClient(`${toriiUrl}/graphql`)
