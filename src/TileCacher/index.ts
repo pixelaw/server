@@ -1,10 +1,10 @@
-import fs from "fs"
+import fs from "node:fs"
 import { PNG } from "pngjs"
 
-import path from "path"
+import path from "node:path"
 import { Contract, RpcProvider } from "starknet"
 import type { Message } from "../types"
-import {getAddresses, getCoreActionsAddresses} from "../utils/getAddresses"
+import { getAddresses, getCoreActionsAddresses } from "../utils/getAddresses"
 import { sleep } from "../utils/sleep"
 import { SqliteDb } from "./db"
 
@@ -18,6 +18,7 @@ let handler: TileCacher
 let running = true
 
 const TILE_TEMPLATE_DIR = path.join(process.cwd(), "assets/tiles/")
+let pixelCount = 0
 
 class TileCacher {
     nodeUrl: string
@@ -45,82 +46,96 @@ class TileCacher {
         const lastProcessedBlocknumber = await this.db.getLastBlockNumber()
         const { block_number: lastBlocknumber } = await this.provider.getBlockLatestAccepted()
 
-        if (lastProcessedBlocknumber == lastBlocknumber) return
+        if (lastProcessedBlocknumber === lastBlocknumber) return
 
-        log(`getEvents: chainBlockNr: ${lastBlocknumber} lastProcessedBlocknr: ${lastProcessedBlocknumber}`)
+        // log(`getEvents: chainBlockNr: ${lastBlocknumber} lastProcessedBlocknr: ${lastProcessedBlocknumber}`)
+
+        const listenAddress = this.worldAddress
+        // const listenAddress = "0x2bf4d3aa0dced89d37d8c3b4ff6a05895c0af32ff3baf9b02abf8504e53eaad"
 
         try {
-            const eventsList = await this.provider.getEvents({
-                address: this.worldAddress,
-                from_block: { block_number: lastProcessedBlocknumber + 1 },
-                to_block: { block_number: lastBlocknumber },
-                keys: [[PIXEL_CHANGED_EVENT]],
-                chunk_size: 1000,
-            })
+            let continuationToken: string | undefined = "0"
+            while (continuationToken) {
+                const eventsList = await this.provider.getEvents({
+                    address: listenAddress,
+                    from_block: { block_number: lastProcessedBlocknumber + 1 },
+                    to_block: { block_number: lastBlocknumber },
+                    // keys: [[PIXEL_CHANGED_EVENT]],
+                    keys: [],
+                    chunk_size: 1024,
+                    continuation_token: continuationToken === "0" ? undefined : continuationToken,
+                })
 
-            for (const { data } of eventsList.events) {
-                // TODO doublecheck if this value indeed means "Pixel" model change
-                if (data[0] !== "0x7e607b2fbb4cfb3fb9d1258fa2ff3aa94f17b3820e42bf1e6a43e2de3f5772e") continue
+                for (const { data } of eventsList.events) {
+                    // console.log(data)
+                    // TODO doublecheck if this value indeed means "Pixel" model change
+                    if (data[0] !== "0x2") continue
 
-                const x = Number.parseInt(data[2], 16)
-                const y = Number.parseInt(data[3], 16)
+                    const x = Number.parseInt(data[1], 16)
+                    const y = Number.parseInt(data[2], 16)
 
-                const color = data[6]
+                    const color = data[5]
 
-                console.log(x, y, color)
+                    console.log(x, y, color)
+                    pixelCount++
+                    // TODO determine the tile(s) to update
+                    // TODO For now we only do scaleFactor=1 tiles, later maybe also scalefactor=10, but that needs interpolation or something
+                    const tileX = x - (x % TILE_1_SIZE)
+                    const tileY = y - (y % TILE_1_SIZE)
 
-                // TODO determine the tile(s) to update
-                // TODO For now we only do scaleFactor=1 tiles, later maybe also scalefactor=10, but that needs interpolation or something
-                const tileX = x - (x % TILE_1_SIZE)
-                const tileY = y - (y % TILE_1_SIZE)
+                    let png
+                    const tileName = `${scaleFactor}_${TILE_1_SIZE}_${tileX}_${tileY}`
+                    const filePath = `${this.tileDir}/${tileName}.png`
 
-                let png
-                const tileName = `${scaleFactor}_${TILE_1_SIZE}_${tileX}_${tileY}`
-                const filePath = `${this.tileDir}/${tileName}.png`
-
-                if (fs.existsSync(filePath)) {
-                    // Load the existing PNG
-                    png = PNG.sync.read(fs.readFileSync(filePath))
-                } else {
-                    // Create a new PNG
-                    fs.copyFileSync(`${TILE_TEMPLATE_DIR}/${scaleFactor}_${TILE_1_SIZE}_template.png`, filePath)
-                    png = PNG.sync.read(fs.readFileSync(filePath))
-                }
-
-                // Extract color components from color string
-                const colorInt = Number.parseInt(color, 16)
-                const r = (colorInt >> 24) & 255
-                const g = (colorInt >> 16) & 255
-                const b = (colorInt >> 8) & 255
-                const a = colorInt & 255
-
-                // Update the pixel at (x, y)
-                const idx = (png.width * y + x) << 2
-                png.data[idx] = r // Red
-                png.data[idx + 1] = g // Green
-                png.data[idx + 2] = b // Blue
-                png.data[idx + 3] = 255 // Alpha TODO, now hardcoded to 255
-
-                // Save the updated PNG
-                fs.writeFileSync(filePath, PNG.sync.write(png))
-
-                // Post a message to TileCacher websocket subscribers
-                if (process.send) {
-                    const message: Message = {
-                        cmd: "tileUpdated",
-                        data: JSON.stringify({
-                            tileCoord: [tileX, tileY],
-                            tileName,
-                        }),
+                    if (fs.existsSync(filePath)) {
+                        // Load the existing PNG
+                        png = PNG.sync.read(fs.readFileSync(filePath))
+                    } else {
+                        // Create a new PNG
+                        fs.copyFileSync(`${TILE_TEMPLATE_DIR}/${scaleFactor}_${TILE_1_SIZE}_template.png`, filePath)
+                        png = PNG.sync.read(fs.readFileSync(filePath))
                     }
-                    process.send(message)
-                } else {
-                    console.log("notsending")
-                }
-            }
 
-            // Mark the retrieved latest blocknumber as done
-            await this.db.setLastBlockNumber(lastBlocknumber)
+                    // Extract color components from color string
+                    const colorInt = Number.parseInt(color, 16)
+                    const r = (colorInt >> 24) & 255
+                    const g = (colorInt >> 16) & 255
+                    const b = (colorInt >> 8) & 255
+                    const a = colorInt & 255
+
+                    const relativeX = x % TILE_1_SIZE
+                    const relativeY = y % TILE_1_SIZE
+
+                    // Update the pixel at (x, y)
+                    const idx = (png.width * relativeY + relativeX) << 2
+                    png.data[idx] = r // Red
+                    png.data[idx + 1] = g // Green
+                    png.data[idx + 2] = b // Blue
+                    png.data[idx + 3] = 255 // Alpha TODO, now hardcoded to 255
+
+                    // Save the updated PNG
+                    fs.writeFileSync(filePath, PNG.sync.write(png))
+
+                    // Post a message to TileCacher websocket subscribers
+                    if (process.send) {
+                        const message: Message = {
+                            cmd: "tileUpdated",
+                            data: JSON.stringify({
+                                tileCoord: [tileX, tileY],
+                                tileName,
+                            }),
+                        }
+                        process.send(message)
+                    } else {
+                        console.log("notsending")
+                    }
+                }
+
+                // Mark the retrieved latest blocknumber as done
+                await this.db.setLastBlockNumber(lastBlocknumber)
+
+                continuationToken = eventsList.continuation_token
+            }
         } catch (e) {
             // TODO Handle this general error
             console.error(e)
@@ -130,7 +145,13 @@ class TileCacher {
         }
     }
 
-    static async create(nodeUrl: string, toriiUrl: string, worldAddress: string, storageDir: string, tilesDir: string): Promise<TileCacher> {
+    static async create(
+        nodeUrl: string,
+        toriiUrl: string,
+        worldAddress: string,
+        storageDir: string,
+        tilesDir: string,
+    ): Promise<TileCacher> {
         const handler = new TileCacher(nodeUrl, toriiUrl, storageDir, tilesDir)
 
         const { coreAddress } = await getCoreActionsAddresses(toriiUrl)
@@ -178,6 +199,7 @@ async function loop(handler: TileCacher) {
     while (running) {
         try {
             await handler.getEvents()
+            // console.log({ pixelCount })
         } catch (e) {
             log(`TileCacher failed: ${e.message}`)
         }
@@ -217,6 +239,7 @@ async function main() {
     handler = await TileCacher.create(
         process.env["RPC_URL"] ?? "http://127.0.0.1:5050",
         process.env["TORII_URL"] ?? "http://127.0.0.1:8080",
+        process.env["WORLD_ADDRESS"] ?? "0x0",
         process.env["STORAGE_DIR"] ?? "./storage",
         process.env["TILES_DIR"] ?? "./storage",
     )

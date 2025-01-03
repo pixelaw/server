@@ -1,32 +1,31 @@
-import http from 'http';
+import http from "http"
 
-import express from 'express';
-import cors from 'cors';
+import cors from "cors"
+import express from "express"
 
-import dotenv from 'dotenv';
-dotenv.config();
+import dotenv from "dotenv"
+dotenv.config()
 
-import {setupTileCacher} from "./tileCacher";
-import {setupQueueHandler} from "./queueHandler";
-import {setupWebsockets} from "./websockets";
-import {setupRoutes} from "./routes";
+import { setupQueueHandler } from "./queueHandler"
+import { setupRoutes } from "./routes"
+import { setupTileCacher } from "./tileCacher"
+import { setupWebsockets } from "./websockets"
 
+const app = express()
+const server = http.createServer(app)
 
-const app = express();
-const server = http.createServer(app);
+app.use(cors()) // Use cors middleware
 
-app.use(cors()); // Use cors middleware
-
-const port: number = parseInt(process.env["SERVER_PORT"]) ?? 3000;
+const port: number = Number.parseInt(process.env["SERVER_PORT"]) ?? 3000
 
 setupRoutes(app)
 
-setupQueueHandler()
+// setupQueueHandler()
 
-setupWebsockets(server).then(wss => {
-    setupTileCacher(wss);
-});
+setupWebsockets(server).then((wss) => {
+    setupTileCacher(wss)
+})
 
 server.listen(port, () => {
-    console.log(`Webserver listening on port ${port}`);
-});
+    console.log(`Webserver listening on port ${port}`)
+})
