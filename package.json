@@ -1,44 +1,44 @@
 {
-    "name": "pixelaw-server",
-    "description": "NodeExpress backend for \"bots\" and other optimizations",
-    "version": "0.5.0",
-    "main": "index.js",
-    "license": "MIT",
-    "scripts": {
-        "tilegen": "ts-node src/cli/generateTiles.ts assets/drawing.png 100 1",
-        "server": "ts-node src/index.ts",
-        "new_server": "scripts/reset.sh && ts-node src/index.ts",
-        "queuehandler": "ts-node src/QueueHandler/index.ts",
-        "selector": "tsx utils/selector.ts"
-    },
-    "dependencies": {
-        "@apollo/client": "^3.8.4",
-        "@aws-sdk/client-s3": "^3.418.0",
-        "@types/fs-extra": "^11.0.4",
-        "@types/pngjs": "^6.0.5",
-        "@types/ws": "^8.5.10",
-        "abi-wan-kanabi": "^2.2.2",
-        "cors": "^2.8.5",
-        "dotenv": "^16.3.1",
-        "express": "5.0.0",
-        "fs-extra": "^11.2.0",
-        "graphql": "^16.8.1",
-        "graphql-tag": "^2.12.6",
-        "graphql-ws": "^5.14.2",
-        "lodash": "^4.17.21",
-        "pngjs": "^7.0.0",
-        "postinstall-postinstall": "^2.1.0",
-        "sqlite": "^5.1.1",
-        "sqlite3": "^5.1.7",
-        "starknet": "^6.10.0",
-        "ws": "8.17.1"
-    },
-    "devDependencies": {
-        "@biomejs/biome": "1.9.4",
-        "@types/node": "^20.7.0",
-        "nodemon": "^3.0.1",
-        "ts-node": "^10.9.1",
-        "typescript": "^5.4.5",
-        "wait-port": "^1.0.4"
-    }
+  "name": "pixelaw-server",
+  "description": "NodeExpress backend for \"bots\" and other optimizations",
+  "version": "0.5.1",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "tilegen": "ts-node src/cli/generateTiles.ts assets/drawing.png 100 1",
+    "server": "ts-node src/index.ts",
+    "new_server": "scripts/reset.sh && ts-node src/index.ts",
+    "queuehandler": "ts-node src/QueueHandler/index.ts",
+    "selector": "tsx utils/selector.ts"
+  },
+  "dependencies": {
+    "@apollo/client": "^3.8.4",
+    "@aws-sdk/client-s3": "^3.418.0",
+    "@types/fs-extra": "^11.0.4",
+    "@types/pngjs": "^6.0.5",
+    "@types/ws": "^8.5.10",
+    "abi-wan-kanabi": "^2.2.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "5.0.0",
+    "fs-extra": "^11.2.0",
+    "graphql": "^16.8.1",
+    "graphql-tag": "^2.12.6",
+    "graphql-ws": "^5.14.2",
+    "lodash": "^4.17.21",
+    "pngjs": "^7.0.0",
+    "postinstall-postinstall": "^2.1.0",
+    "sqlite": "^5.1.1",
+    "sqlite3": "^5.1.7",
+    "starknet": "^6.10.0",
+    "ws": "8.17.1"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "1.9.4",
+    "@types/node": "^20.7.0",
+    "nodemon": "^3.0.1",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.4.5",
+    "wait-port": "^1.0.4"
+  }
 }
