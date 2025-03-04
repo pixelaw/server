@@ -1,4 +1,4 @@
-import { type Bounds, type Coordinate, MAX_DIMENSION, MAX_UINT32 } from "../types"
+import { type Bounds, type Coordinate, MAX_DIMENSION, MAX_UINT32 } from "../types.ts"
 
 const MAX_BOX = 100000
 export function isTileWithinBoundingBox(coordinate: Coordinate, boundingBox: Bounds): boolean {

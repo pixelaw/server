@@ -1,12 +1,10 @@
 {
-  "compilerOptions": {
-    "module": "commonjs",
-    "target": "ES2021",
-    "sourceMap": true,
-    "lib": ["ESNext", "dom"],
-    "esModuleInterop": true
-  },
-  "exclude": [
-    "node_modules"
-  ]
+    "compilerOptions": {
+        "target": "esnext",
+        "module": "nodenext",
+        "allowImportingTsExtensions": true,
+        "rewriteRelativeImportExtensions": true,
+        "verbatimModuleSyntax": true,
+        "allowSyntheticDefaultImports": true
+    }
 }

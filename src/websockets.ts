@@ -1,57 +1,55 @@
-
-import WebSocket from 'ws';
-import {Bounds} from "./types";
+import type WebSocket from "ws"
+import { WebSocketServer } from "ws"
+import type { Bounds } from "./types.ts"
 export interface CustomClient extends WebSocket {
-    boundingBox: Bounds;
+    boundingBox: Bounds
 }
 
 function isValidJson(str: string): boolean {
     try {
-        JSON.parse(str);
+        JSON.parse(str)
     } catch (e) {
-        return false;
+        return false
     }
-    return true;
+    return true
 }
 export async function setupWebsockets(server) {
+    const wss = new WebSocketServer({ noServer: true })
 
-    const wss = new WebSocket.Server({noServer: true});
-
-    wss.on('connection', (ws: CustomClient) => {
+    wss.on("connection", (ws: CustomClient) => {
         console.log("connection")
         // Add boundingBox property to ws
-        ws.boundingBox = null;
+        ws.boundingBox = null
 
         // Handle messages from clients
-        ws.on('message', (message) => {
+        ws.on("message", (message) => {
             console.log("message")
-            if(isValidJson(message.toString())){
-                const msg = JSON.parse(message.toString());
-                if (msg.cmd === 'subscribe' && msg.data.hasOwnProperty("boundingBox")) {
-                    ws.boundingBox = msg.data.boundingBox;
+            if (isValidJson(message.toString())) {
+                const msg = JSON.parse(message.toString())
+                if (msg.cmd === "subscribe" && msg.data.hasOwnProperty("boundingBox")) {
+                    ws.boundingBox = msg.data.boundingBox
                     console.log("We got a subscriber!", msg.data.boundingBox)
-                }else{
+                } else {
                     console.log("some other stuff", msg)
                 }
-            }else{
+            } else {
                 console.log("Received non-json", message)
             }
+        })
+        ws.on("error", (err) => {
+            console.error("WebSocket error:", err)
+        })
+    })
 
-        });
-        ws.on('error', (err) => {
-            console.error('WebSocket error:', err);
-        });
-    });
-
-    server.on('upgrade', (request, socket, head) => {
-        if (request.url === '/tiles') {
+    server.on("upgrade", (request, socket, head) => {
+        if (request.url === "/tiles") {
             wss.handleUpgrade(request, socket, head, (ws) => {
-                wss.emit('connection', ws, request);
-            });
+                wss.emit("connection", ws, request)
+            })
         } else {
-            socket.destroy();
+            socket.destroy()
         }
-    });
+    })
 
     return wss
 }

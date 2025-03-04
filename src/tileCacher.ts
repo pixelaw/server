@@ -1,12 +1,12 @@
 import { fork } from "child_process"
 import WebSocket from "ws"
-import { Bounds, Coordinate, FORK_OPTIONS, type Message } from "./types"
-import { isTileWithinBoundingBox } from "./utils/coordinates"
-import type { CustomClient } from "./websockets"
+import type { Bounds, Coordinate, Message } from "./types.ts"
+import { isTileWithinBoundingBox } from "./utils/coordinates.ts"
+import type { CustomClient } from "./websockets.ts"
 
 export async function setupTileCacher(wss) {
     // Start TileCacher
-    const tileCacher = fork("./src/TileCacher/index.ts", [], FORK_OPTIONS)
+    const tileCacher = fork("./src/TileCacher/index.ts", [])
 
     tileCacher.on("error", (error) => {
         console.error("TileCacher Error: ", error)
@@ -19,13 +19,8 @@ export async function setupTileCacher(wss) {
 
             wss.clients.forEach((client: CustomClient) => {
                 console.log("gonna send", client.readyState)
-                if (
-                    client.readyState === WebSocket.OPEN &&
-                    client.boundingBox
-                ) {
-                    if (
-                        isTileWithinBoundingBox(tileCoord, client.boundingBox)
-                    ) {
+                if (client.readyState === WebSocket.OPEN && client.boundingBox) {
+                    if (isTileWithinBoundingBox(tileCoord, client.boundingBox)) {
                         const msg = JSON.stringify({
                             cmd: "tileChanged",
                             data: { tileName, timestamp: Date.now() },

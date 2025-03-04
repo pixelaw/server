@@ -1,5 +1,6 @@
 
-FROM node:22-bookworm as builder
+FROM node:22-bookworm AS builder
+RUN corepack enable
 
 # Install these packages for compiling canvas
 RUN \
@@ -18,17 +19,25 @@ RUN \
 WORKDIR /app
 
 
-COPY package.json yarn.lock ./
+
+COPY package.json pnpm-lock.yaml ./
 
 # Install dependencies
-RUN yarn install --frozen-lockfile
+RUN pnpm install
 
 
 
-FROM node:22-bookworm-slim as runner
+FROM node:22-bookworm-slim AS runner
 WORKDIR /app
 
-RUN yarn global add ts-node
+RUN \
+    apt update \
+    && apt install -y \
+      net-tools \
+      nano \
+      curl \
+    && apt autoremove && apt clean
+
 
 COPY --from=builder /app /app
 
@@ -41,4 +50,4 @@ ENV STORAGE_DIR="/app/storage"
 ENV WEB_DIR="/app/web"
 
 # Define the command to run your app using CMD which defines your runtime
-CMD [ "ts-node", "src/index.ts" ]
+CMD [ "node","--experimental-strip-types", "src/index.ts" ]

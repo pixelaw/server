@@ -6,10 +6,10 @@ import express from "express"
 import dotenv from "dotenv"
 dotenv.config()
 
-import { setupQueueHandler } from "./queueHandler"
-import { setupRoutes } from "./routes"
-import { setupTileCacher } from "./tileCacher"
-import { setupWebsockets } from "./websockets"
+import { setupQueueHandler } from "./queueHandler.ts"
+import { setupRoutes } from "./routes.ts"
+import { setupTileCacher } from "./tileCacher.ts"
+import { setupWebsockets } from "./websockets.ts"
 
 const app = express()
 const server = http.createServer(app)

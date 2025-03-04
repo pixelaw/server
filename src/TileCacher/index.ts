@@ -3,10 +3,10 @@ import { PNG } from "pngjs"
 
 import path from "node:path"
 import { Contract, RpcProvider } from "starknet"
-import type { Message } from "../types"
-import { getAddresses, getCoreActionsAddresses } from "../utils/getAddresses"
-import { sleep } from "../utils/sleep"
-import { SqliteDb } from "./db"
+import type { Message } from "../types.ts"
+import { getCoreActionsAddresses } from "../utils/getAddresses.ts"
+import { sleep } from "../utils/sleep.ts"
+import { SqliteDb } from "./db.ts"
 
 export const PIXEL_CHANGED_EVENT = "0x1a2f334228cee715f1f0f54053bb6b5eac54fa336e0bc1aacf7516decb0471d"
 

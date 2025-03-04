@@ -1,8 +1,8 @@
 import { fork } from "node:child_process"
-import { FORK_OPTIONS, type Message } from "./types"
+import type { Message } from "./types.ts"
 
 export async function setupQueueHandler() {
-    const queueHandler = fork("./src/QueueHandler/index.ts", [], FORK_OPTIONS)
+    const queueHandler = fork("./src/QueueHandler/index.ts", [])
 
     queueHandler.on("message", (message: Message) => {
         console.log("QueueHandler: ", message.data)
